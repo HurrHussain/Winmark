@@ -20,7 +20,7 @@ export function Hero() {
       {/* Layer 1: Warehouse background image */}
       <div className="absolute inset-0 w-full h-full">
         <img
-          src="/hero-warehouse.webp"
+          src="./hero-warehouse.webp"
           alt="Winmark Ingredients Facility"
           className="w-full h-full object-cover scale-[1.05]"
         />

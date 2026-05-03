@@ -2,20 +2,20 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const clientsData = [
-  { name: "Haleeb Foods", src: "/haleeb.png", sizeClass: "scale-125 md:scale-150" },
-  { name: "SixB Food Industries", src: "/6b.png", sizeClass: "" },
-  { name: "Dairyland", src: "/dll.png", sizeClass: "scale-125 md:scale-150" },
-  { name: "PFJ", src: "/pfj.png", sizeClass: "" },
-  { name: "Rehmat-e-Shereen", src: "/rehmat.png", sizeClass: "" },
-  { name: "Innovative", src: "/innovative.png", sizeClass: "" },
-  { name: "Gourmet Foods", src: "/gourmet.png", sizeClass: "scale-125 md:scale-150" }
+  { name: "Haleeb Foods", src: "./haleeb.png", sizeClass: "scale-125 md:scale-150" },
+  { name: "SixB Food Industries", src: "./6b.png", sizeClass: "" },
+  { name: "Dairyland", src: "./dll.png", sizeClass: "scale-125 md:scale-150" },
+  { name: "PFJ", src: "./pfj.png", sizeClass: "" },
+  { name: "Rehmat-e-Shereen", src: "./rehmat.png", sizeClass: "" },
+  { name: "Innovative", src: "./innovative.png", sizeClass: "" },
+  { name: "Gourmet Foods", src: "./gourmet.png", sizeClass: "scale-125 md:scale-150" }
 ];
 
 const partnersData = [
-  { name: "Engro", src: "/engro.png", sizeClass: "" },
-  { name: "Dayfresh", src: "/dll.png", sizeClass: "scale-125 md:scale-150" },
-  { name: "IFFCO", src: "/iffco.png", sizeClass: "" },
-  { name: "IRC", src: "/irc.png", sizeClass: "" }
+  { name: "Engro", src: "./engro.png", sizeClass: "" },
+  { name: "Dayfresh", src: "./dll.png", sizeClass: "scale-125 md:scale-150" },
+  { name: "IFFCO", src: "./iffco.png", sizeClass: "" },
+  { name: "IRC", src: "./irc.png", sizeClass: "" }
 ];
 
 // Duplicated arrays to ensure infinite scrolling looks seamless

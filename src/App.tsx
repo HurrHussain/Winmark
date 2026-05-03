@@ -65,7 +65,7 @@ function FlyingLogo() {
       >
         <Link to="/" style={{ pointerEvents: "auto" }}>
           <img
-            src="/logo-full.png"
+            src="./logo-full.png"
             alt="Winmark Ingredients — Home"
             className="h-28 w-auto object-contain"
           />
@@ -87,7 +87,7 @@ function FlyingLogo() {
     >
       <Link to="/" style={{ pointerEvents: "auto" }}>
         <img
-          src="/logo-full.png"
+          src="./logo-full.png"
           alt="Winmark Ingredients — Home"
           className="h-28 w-auto object-contain drop-shadow-sm"
         />

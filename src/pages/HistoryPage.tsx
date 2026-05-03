@@ -40,7 +40,7 @@ const MILESTONES = [
     eraLabel: "The Corporate Era",
     title: "Winmark Ingredients Pvt Ltd",
     body: "A pivotal leadership transition brought a renewed, aggressive vision. The company underwent a full corporate restructure, officially registering as Winmark Ingredients Pvt Ltd. By reorganizing sales divisions for Direct Industries, HoReCa, and Bakeries, we significantly expanded our market footprint — powering Pakistan's food industry forward.",
-    image: "/riaz.png",
+    image: "./riaz.png",
     imageAlt: "Winmark Leadership Transition",
   },
   {

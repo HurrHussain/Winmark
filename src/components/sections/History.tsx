@@ -66,7 +66,7 @@ export function History() {
             <div className="md:col-span-2 p-6 md:p-8 flex items-center justify-center bg-slate-900/40">
               <div className="w-full aspect-[4/5] relative rounded-xl overflow-hidden border border-slate-700/50 bg-slate-800 shadow-inner">
                 <img
-                  src="/riaz.png"
+                  src="./riaz.png"
                   alt="Riaz — Leadership Vision"
                   className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
                   onError={(e) => {

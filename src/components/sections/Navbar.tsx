@@ -163,7 +163,7 @@ export function Navbar() {
                 {isSolid && (
                   <motion.img
                     key="mobile-logo"
-                    src="/logo-full.png"
+                    src="./logo-full.png"
                     alt="Winmark Ingredients"
                     className="h-8 w-auto object-contain"
                     initial={{ opacity: 0 }}

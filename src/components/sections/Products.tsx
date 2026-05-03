@@ -8,28 +8,28 @@ const products = [
     subtitle: "Dutch-Process Powders, Cocoa Butter & Mass Solutions",
     description:
       "Premium Dutch-process cocoa powders, cocoa butter, and compound chocolate blocks for confectionery and bakery applications.",
-    image: "/product-cocoa.webp",
+    image: "./product-cocoa.webp",
   },
   {
     title: "Milk Powder",
     subtitle: "High-Grade SMP, FCMP & Premium Desi Ghee",
     description:
       "High-grade skimmed milk powder (SMP) and full cream milk powder (FCMP) sourced from certified dairy processors.",
-    image: "/product-milk.webp",
+    image: "./product-milk.webp",
   },
   {
     title: "Fats",
     subtitle: "Industrial Specialty Fats, CBS & Bakery Shortening",
     description:
       "IFFCO-grade specialty fats, desi ghee, vegetable shortening, and fractionated palm olein for industrial baking.",
-    image: "/product-oils.webp",
+    image: "./product-oils.webp",
   },
   {
     title: "Emulsifiers",
     subtitle: "Functional Stabilizers, DATEM & Lecithin Solutions",
     description:
       "Functional stabilizers and emulsifiers to optimize texture, shelf life, and taste in beverage formulations.",
-    image: "/product-emulsifiers.webp",
+    image: "./product-emulsifiers.webp",
   },
 ]
 

@@ -60,7 +60,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             <div className="flex flex-col items-start gap-4 mb-4">
               <img
-                src="/logo-full.png"
+                src="./logo-full.png"
                 alt="Winmark Logo"
                 className="h-20 md:h-24 w-auto object-contain object-left brightness-0 invert"
               />

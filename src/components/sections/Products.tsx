@@ -4,29 +4,29 @@ import { Link } from "react-router-dom"
 
 const products = [
   {
-    title: "Confectionery",
-    subtitle: "Cocoa Products, Couvertures & Compound Slab",
+    title: "Cocoa",
+    subtitle: "Dutch-Process Powders, Cocoa Butter & Mass Solutions",
     description:
       "Premium Dutch-process cocoa powders, cocoa butter, and compound chocolate blocks for confectionery and bakery applications.",
     image: "/product-cocoa.webp",
   },
   {
-    title: "Dairy",
-    subtitle: "Milk Powders, Desi Ghee & AMF",
+    title: "Milk Powder",
+    subtitle: "High-Grade SMP, FCMP & Premium Desi Ghee",
     description:
       "High-grade skimmed milk powder (SMP) and full cream milk powder (FCMP) sourced from certified dairy processors.",
     image: "/product-milk.webp",
   },
   {
-    title: "Bakery",
-    subtitle: "Specialized Fats, Shortening & Margarine",
+    title: "Fats",
+    subtitle: "Industrial Specialty Fats, CBS & Bakery Shortening",
     description:
       "IFFCO-grade specialty fats, desi ghee, vegetable shortening, and fractionated palm olein for industrial baking.",
     image: "/product-oils.webp",
   },
   {
-    title: "Beverages",
-    subtitle: "Tea Whitener, Emulsifiers & Stabilizers",
+    title: "Emulsifiers",
+    subtitle: "Functional Stabilizers, DATEM & Lecithin Solutions",
     description:
       "Functional stabilizers and emulsifiers to optimize texture, shelf life, and taste in beverage formulations.",
     image: "/product-emulsifiers.webp",
@@ -108,7 +108,7 @@ export function Products() {
         </div>
 
         {/* Call to Action Button */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

@@ -10,11 +10,9 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product, index, onClick }: ProductCardProps) => (
   <motion.div
-    layout
-    initial={{ opacity: 0, scale: 0.95 }}
-    animate={{ opacity: 1, scale: 1 }}
-    exit={{ opacity: 0, scale: 0.95 }}
-    transition={{ duration: 0.2 }}
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.01 }} // Subtle staggered entry
     onClick={onClick}
     className="bg-[#1e293b] rounded-xl border border-slate-700 overflow-hidden flex flex-col group hover:border-teal-500/50 transition-all shadow-lg cursor-pointer hover:shadow-teal-900/20 hover:scale-[1.02] relative"
   >

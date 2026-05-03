@@ -104,16 +104,14 @@ export function ProductsPage() {
             {/* Product Grid - 3 columns on desktop, 1 on mobile */}
             {filteredProducts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <AnimatePresence>
-                  {filteredProducts.map((product, idx) => (
-                    <ProductCard 
-                      key={`${product.name}-${idx}`}
-                      product={product}
-                      index={idx}
-                      onClick={() => setSelectedProduct(product)}
-                    />
-                  ))}
-                </AnimatePresence>
+                {filteredProducts.map((product, idx) => (
+                  <ProductCard 
+                    key={`${product.name}-${idx}`}
+                    product={product}
+                    index={idx}
+                    onClick={() => setSelectedProduct(product)}
+                  />
+                ))}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-20 px-4 bg-[#1e293b] rounded-xl border border-slate-700 border-dashed text-center">

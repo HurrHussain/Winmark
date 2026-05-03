@@ -23,7 +23,10 @@ export function FacilityCard({ title, imageAlt, imagePlaceholderText, Icon, feat
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="bg-[#1e293b] border border-slate-700 rounded-xl overflow-hidden group hover:shadow-[0_8px_40px_rgba(0,0,0,0.3)] transition-all duration-300 flex flex-col"
     >
-      <div className="h-64 flex items-center justify-center bg-slate-800/30 m-6 rounded-xl border-2 border-dashed border-slate-600/50 group-hover:border-teal-500/50 transition-colors duration-300 relative overflow-hidden">
+      <div 
+        className="h-64 flex items-center justify-center bg-slate-800/30 m-6 rounded-xl border-2 border-dashed border-slate-600/50 group-hover:border-teal-500/50 transition-colors duration-300 relative overflow-hidden"
+        aria-label={imageAlt}
+      >
         <span className="text-slate-400 font-bold tracking-[0.2em] uppercase text-sm px-6 text-center leading-relaxed relative z-10">
           {imagePlaceholderText}
         </span>

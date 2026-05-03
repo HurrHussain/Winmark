@@ -1,15 +1,16 @@
-import { lazy, Suspense } from "react"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { lazy, Suspense, useEffect } from "react"
+import { HashRouter as Router, Routes, Route, useLocation, Link } from "react-router-dom"
+import { motion, useTransform } from "framer-motion"
 import { Footer } from "@/components/sections/Footer"
 import { Navbar } from "@/components/sections/Navbar"
+import { ScrollProvider, useScrollContext } from "@/hooks/ScrollContext"
 
 // Lazy load pages for better initial performance
 const HomePage = lazy(() => import("@/pages/HomePage").then(m => ({ default: m.HomePage })))
 const ServicesPage = lazy(() => import("@/pages/ServicesPage").then(m => ({ default: m.ServicesPage })))
 const ProductsPage = lazy(() => import("@/pages/ProductsPage").then(m => ({ default: m.ProductsPage })))
 const HistoryPage = lazy(() => import("@/pages/HistoryPage").then(m => ({ default: m.HistoryPage })))
-const LegacyHistoryPage = lazy(() => import("@/pages/LegacyHistory").then(m => ({ default: m.LegacyHistoryPage })))
-const ClientsPage = lazy(() => import("@/pages/ClientsPage").then(m => ({ default: m.ClientsPage })))
+const AboutPage = lazy(() => import("@/pages/AboutPage").then(m => ({ default: m.AboutPage })))
 const ContactPage = lazy(() => import("@/pages/ContactPage").then(m => ({ default: m.ContactPage })))
 
 // Simple loading fallback
@@ -19,26 +20,114 @@ const PageLoader = () => (
   </div>
 )
 
+/**
+ * FlyingLogo — Page-level fixed element. Belongs to neither Hero nor Navbar.
+ *
+ * THE MATH (Absolute Pixel Mapping):
+ *   logoY:     scroll 0→450px  maps to  y 260→16px
+ *              At 0px: logo sits 260px from top, visually centered over the hero card at 2.5 scale.
+ *              At 450px: logo lands 16px from top, centered inside the navbar strip.
+ *
+ *   logoScale: scroll 0→450px  maps to  scale 2.5→0.9
+ *              2.5x = dominant visual authority over the headline.
+ *              0.9x = compact but balanced in the navbar.
+ *
+ * SPRING: Heavy spring (stiffness:50, damping:20, mass:1.2) wraps the raw transforms
+ *         so the logo feels weighted and physical, not snappy.
+ *
+ * SUBPAGES: Static position at scale:0.9, y:16px — instant lock, no scroll dependency.
+ * HOMEPAGE: Full continuous scroll-driven flight.
+ * CLICKABLE: Wrapped in a Link to "/" so the logo doubles as a Home button on all pages.
+ */
+function FlyingLogo() {
+  const { scrollY } = useScrollContext()
+  const location = useLocation()
+  const isHomePage = location.pathname === "/"
+
+  // CORRECTED MATH:
+  //   y: 240 → 6px  — lowered starting position so it sits cleanly inside the hero card
+  //   scale: 1.9 → 0.75 — larger in hero, but smaller to fit perfectly inside the 96px tall navbar
+  // At 1.9x: logo height = 112*1.9 = 212px, bottom = 240+212 = 452px
+  // Card content starts after spacer ≈ 456px — snug fit with no overlap
+  const logoY = useTransform(scrollY, [0, 450], [240, 6])
+  const logoScale = useTransform(scrollY, [0, 450], [1.9, 0.75])
+
+  // ── SUBPAGES: static logo locked to its navbar resting position ──
+  if (!isHomePage) {
+    return (
+      <div
+        className="fixed top-0 left-0 w-full z-50 flex justify-center"
+        style={{
+          transform: "translateY(6px) scale(0.75)",
+          transformOrigin: "top center",
+          pointerEvents: "none",
+        }}
+      >
+        <Link to="/" style={{ pointerEvents: "auto" }}>
+          <img
+            src="/logo-full.png"
+            alt="Winmark Ingredients — Home"
+            className="h-28 w-auto object-contain"
+          />
+        </Link>
+      </div>
+    )
+  }
+
+  // ── HOMEPAGE: full scroll-driven flight ──
+  return (
+    <motion.div
+      style={{
+        y: logoY,
+        scale: logoScale,
+        willChange: "transform, opacity",
+      }}
+      className="fixed top-0 left-0 w-full z-50 flex justify-center origin-top pointer-events-none"
+      // pointer-events-none on the outer div, auto on the link inside
+    >
+      <Link to="/" style={{ pointerEvents: "auto" }}>
+        <img
+          src="/logo-full.png"
+          alt="Winmark Ingredients — Home"
+          className="h-28 w-auto object-contain drop-shadow-sm"
+        />
+      </Link>
+    </motion.div>
+  )
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 export function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-white overflow-x-hidden flex flex-col">
-        <Navbar />
-        <main className="flex-1 flex flex-col">
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/products" element={<ProductsPage />} />
-              <Route path="/history" element={<HistoryPage />} />
-              <Route path="/legacy-history" element={<LegacyHistoryPage />} />
-              <Route path="/clients" element={<ClientsPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-            </Routes>
-          </Suspense>
-        </main>
-        <Footer />
-      </div>
+      <ScrollToTop />
+      <ScrollProvider>
+        {/* FlyingLogo — page-level z-50 layer, owned by neither Hero nor Navbar */}
+        <FlyingLogo />
+        <div className="min-h-screen bg-white overflow-x-hidden flex flex-col">
+          <Navbar />
+          <main className="flex-1 flex flex-col">
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/history" element={<HistoryPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+              </Routes>
+            </Suspense>
+          </main>
+          <Footer />
+        </div>
+      </ScrollProvider>
     </Router>
   )
 }

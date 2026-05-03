@@ -1,13 +1,13 @@
-import { 
-  Warehouse, 
-  CheckCircle2, 
-  Snowflake, 
-  Thermometer, 
-  Zap, 
-  ShieldCheck, 
-  Truck, 
-  Globe, 
-  ArrowRight 
+import {
+  Warehouse,
+  CheckCircle2,
+  Snowflake,
+  Thermometer,
+  Zap,
+  ShieldCheck,
+  Truck,
+  Globe,
+  ArrowRight
 } from "lucide-react"
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
@@ -78,19 +78,19 @@ const STRENGTHS = [
 export function ServicesPage() {
   return (
     <div className="bg-[#0f172a] text-slate-200 antialiased min-h-screen flex flex-col pt-20 md:pt-24">
-      
+
       {/* Hero Section */}
       <section className="relative bg-slate-900 text-white py-24 px-6 md:px-12 overflow-hidden">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.2 }}
           transition={{ duration: 1.5 }}
-          className="absolute inset-0 z-0 bg-cover bg-center" 
+          className="absolute inset-0 z-0 bg-cover bg-center"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1586528116311-ad8ed3891d17?auto=format&fit=crop&q=80')" }}
         ></motion.div>
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900 to-transparent z-10"></div>
         <div className="relative z-20 max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -103,7 +103,7 @@ export function ServicesPage() {
               The Infrastructure Powering Pakistan's Food Industry.
             </h1>
             <p className="text-lg text-slate-300 max-w-2xl leading-relaxed">
-              Over 500,000 square feet of advanced storage, seamless cold-chain logistics, and strict quality assurance ensuring your production never stops.
+              Over *** square feet of hybrid warehouse storage, seamless cold-chain logistics, and strict quality assurance ensuring your production never stops.
             </p>
           </motion.div>
         </div>
@@ -113,7 +113,7 @@ export function ServicesPage() {
       <section className="py-24 px-6 md:px-12 max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {FACILITIES.map((facility, idx) => (
-            <FacilityCard 
+            <FacilityCard
               key={idx}
               index={idx}
               {...facility}
@@ -136,7 +136,7 @@ export function ServicesPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {STRENGTHS.map((strength, idx) => (
-              <StrengthCard 
+              <StrengthCard
                 key={idx}
                 index={idx}
                 {...strength}
@@ -148,7 +148,7 @@ export function ServicesPage() {
 
       {/* CTA Section */}
       <section className="py-24 px-6 md:px-12 bg-[#1e535e] text-white text-center mb-0 mt-auto overflow-hidden relative">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 0.1, scale: 1 }}
           className="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-white blur-3xl"
@@ -161,7 +161,7 @@ export function ServicesPage() {
             Partner with Winmark to ensure resilient, scalable, and compliant logistics for your enterprise.
           </p>
           <Link to="/contact" className="block w-fit mx-auto">
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-teal-500 text-white text-xs font-semibold uppercase tracking-widest px-8 py-4 rounded-md hover:bg-teal-400 transition-colors duration-300 flex items-center justify-center gap-2 shadow-xl shadow-black/10"
@@ -172,7 +172,7 @@ export function ServicesPage() {
           </Link>
         </div>
       </section>
-      
+
     </div>
   );
 }

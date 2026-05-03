@@ -72,7 +72,7 @@ export function GlobalNetwork() {
             Trusted By & Sourced From
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-[#0f172a]">
-            Our Global Network
+            {viewBoth ? "Our Global Network" : activeTab === 'clients' ? "Our Clients" : "Our Business Partners"}
           </h2>
         </div>
 
@@ -88,7 +88,7 @@ export function GlobalNetwork() {
               } ${viewBoth ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               Our Clients
-              {activeTab === 'clients' && !viewBoth && (
+              {activeTab === 'clients' && (
                 <motion.div layoutId="activeTabBg" className="absolute inset-0 bg-teal-600 rounded-lg -z-10" />
               )}
             </button>
@@ -100,7 +100,7 @@ export function GlobalNetwork() {
               } ${viewBoth ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               Global Partners
-              {activeTab === 'partners' && !viewBoth && (
+              {activeTab === 'partners' && (
                 <motion.div layoutId="activeTabBg" className="absolute inset-0 bg-teal-600 rounded-lg -z-10" />
               )}
             </button>

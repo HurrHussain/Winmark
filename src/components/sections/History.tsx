@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { Link } from "react-router-dom"
 import { ArrowRight } from "lucide-react"
 
+const MotionLink = motion(Link)
+
 export function History() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: "-80px" })
@@ -98,9 +100,9 @@ export function History() {
 
               {/* Magnetic CTA Button */}
               <div>
-                <motion.a
+                <MotionLink
                   ref={btnRef}
-                  href="/legacy-history"
+                  to="/history"
                   onMouseMove={handleMouseMove}
                   onMouseLeave={handleMouseLeave}
                   animate={{ x: btnStyle.x, y: btnStyle.y }}
@@ -120,7 +122,7 @@ export function History() {
                   />
                   <span className="relative z-10">Explore Our 25-Year Legacy</span>
                   <ArrowRight size={16} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
-                </motion.a>
+                </MotionLink>
               </div>
 
             </div>

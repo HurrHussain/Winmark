@@ -6,7 +6,7 @@ const navLinks = [
   { label: "Services", to: "/services" },
   { label: "Products", to: "/products" },
   { label: "History", to: "/history" },
-  { label: "Clients", to: "/clients" },
+  { label: "About Us", to: "/about" },
 ]
 
 const warehouses = [

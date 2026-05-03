@@ -1,129 +1,101 @@
-import { useRef, useState, useEffect } from "react"
-import { motion, useScroll, useTransform, useSpring } from "framer-motion"
+import { useRef } from "react"
+import { motion, useTransform } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useScrollContext } from "@/hooks/ScrollContext"
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const { scrollY } = useScrollContext()
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  })
+  // Hero Card Fade: Stretched to 350px for a more majestic, slower transition.
+  // As scroll goes from 0px to 350px, opacity goes from 1 to 0.
+  const cardOpacity = useTransform(scrollY, [150, 800], [1, 0])
 
-  // Parallax: text panel slides up faster than the bg image
-  const panelY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"])
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
-  const panelOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
-  const scrollOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0])
-
-  // Smooth spring for cursor tracking
-  const springX = useSpring(0, { stiffness: 80, damping: 20 })
-  const springY = useSpring(0, { stiffness: 80, damping: 20 })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const cx = window.innerWidth / 2
-      const cy = window.innerHeight / 2
-      springX.set((e.clientX - cx) * 0.04)
-      springY.set((e.clientY - cy) * 0.04)
-      setMousePos({
-        x: ((e.clientX - cx) / cx) * 100,
-        y: ((e.clientY - cy) / cy) * 100,
-      })
-    }
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [springX, springY])
+  // Scroll indicator fades out early so it doesn't linger
+  const scrollIndicatorOpacity = useTransform(scrollY, [0, 120], [1, 0])
 
   return (
     <section ref={containerRef} className="relative h-screen min-h-[600px] overflow-hidden">
-      {/* Fixed background image with parallax */}
-      <motion.div
-        className="absolute inset-0 w-full h-full"
-        style={{ y: bgY }}
-      >
+      {/* Layer 1: Warehouse background image */}
+      <div className="absolute inset-0 w-full h-full">
         <img
           src="/hero-warehouse.webp"
           alt="Winmark Ingredients Facility"
-          className="w-full h-full object-cover"
-          style={{ transform: "scale(1.1)" }}
+          className="w-full h-full object-cover scale-[1.05]"
         />
-        {/* Very light wash — keeps it bright, not dark */}
-        <div className="absolute inset-0 bg-white/30" />
-      </motion.div>
+        {/* Gradient wash — top and bottom edges, center stays bright */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/10" />
+      </div>
 
-      {/* Interactive glow that follows cursor */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: `radial-gradient(600px circle at calc(50% + ${mousePos.x * 0.6}px) calc(50% + ${mousePos.y * 0.6}px), rgba(30,83,94,0.12), transparent 70%)`,
-          transition: "background 0.1s ease",
-        }}
-      />
 
-      {/* Frosted glass content panel */}
+
+      {/* Layer 2: The translucent hero card — fades out as user scrolls */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center px-6"
-        style={{ y: panelY, opacity: panelOpacity }}
+        style={{ opacity: cardOpacity }}
       >
         <motion.div
-          className="relative max-w-3xl w-full text-center px-10 py-14 rounded-2xl"
+          className="relative max-w-4xl w-full text-center px-10 py-8 rounded-[3rem] mx-6 overflow-hidden"
           style={{
-            background: "rgba(255,255,255,0.62)",
-            backdropFilter: "blur(18px)",
-            WebkitBackdropFilter: "blur(18px)",
-            border: "1px solid rgba(255,255,255,0.7)",
-            boxShadow: "0 8px 48px rgba(30,83,94,0.10), 0 2px 8px rgba(0,0,0,0.06)",
-            x: springX,
-            y: springY,
+            background: "rgba(255,255,255,0.10)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            border: "1px solid rgba(255,255,255,0.30)",
+            boxShadow: "0 0 50px 0 rgba(255,255,255,0.05)",
           }}
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
+          {/* Internal light-reflection glow: simulates light hitting top-left of glass */}
+          <div
+            className="absolute inset-0 pointer-events-none rounded-[2rem]"
+            style={{
+              background: "linear-gradient(135deg, rgba(32, 21, 3, 0.17) 0%, transparent 10%)",
+            }}
+          />
+
+          {/* Safety gap: space for the Flying Logo at 2.5 scale hovering above the card */}
+          <div className="h-44 w-full" />
+
           {/* Accent line */}
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="h-px w-10 bg-[#1e535e]" />
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#1e535e]">
-              Est. 2001 · Karachi, Pakistan
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <span className="h-[1px] w-10 bg-[#1e535e]/30" />
+            <span className="text-[12px] font-bold tracking-[0.3em] uppercase text-[#1e535e]">
+              Est. 2001 • Karachi • Lahore
             </span>
-            <div className="h-px w-10 bg-[#1e535e]" />
+            <span className="h-[1px] w-10 bg-[#1e535e]/30" />
           </div>
 
-          {/* Main headline */}
-          <h1
-            className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none mb-4"
-            style={{ color: "#1e535e" }}
-          >
-            WINMARK
-            <br />
-            <span className="text-slate-900">INGREDIENTS</span>
+          <h1 className="text-2xl md:text-3xl font-bold text-[#0f172a] mb-6 tracking-tight leading-[1.1]">
+            Premier Sourcing & Distribution<br />for the Food Industry.
           </h1>
 
-          <p className="text-lg md:text-xl font-medium text-slate-700 leading-relaxed mb-3 max-w-xl mx-auto">
-            Premier Sourcing &amp; Distribution for the Food Industry.
-          </p>
-          <p className="text-sm text-slate-500 mb-10 tracking-wide">
-            Trusted by <strong className="text-slate-700">Unilever</strong>, <strong className="text-slate-700">Dairyland</strong> &amp; <strong className="text-slate-700">Rehmat-e-Shereen</strong>
+          <p className="text-slate-800 font-medium text-base mb-12 max-w-lg mx-auto leading-relaxed">
+            Trusted by industrial leaders including{" "}
+            <span className="text-[#1e535e] font-bold underline decoration-teal-500/30 underline-offset-4">Unilever</span>{" "}
+            and{" "}
+            <span className="text-[#1e535e] font-bold underline decoration-teal-500/30 underline-offset-4">Dairyland</span>.
           </p>
 
           {/* CTA */}
-          <div className="flex items-center justify-center gap-4 flex-wrap">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white text-sm font-semibold tracking-wide transition-all hover:shadow-lg hover:scale-105 active:scale-100"
-              style={{ backgroundColor: "#1e535e" }}
+              className="inline-flex items-center justify-center px-12 py-4 rounded-full text-white text-sm font-bold tracking-wide transition-all hover:-translate-y-0.5"
+              style={{
+                backgroundColor: "#1e535e",
+                boxShadow: "0 10px 20px -5px rgba(30,83,94,0.4)",
+              }}
             >
-              Explore Services
+              Our Services
             </Link>
             <Link
               to="/products"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 text-sm font-semibold tracking-wide transition-all hover:scale-105"
-              style={{ borderColor: "#1e535e", color: "#1e535e" }}
+              className="inline-flex items-center justify-center px-12 py-4 rounded-full text-slate-800 text-sm font-bold tracking-wide border border-slate-200 bg-white/40 hover:bg-white transition-all"
             >
-              Our Products
+              Products
             </Link>
           </div>
         </motion.div>
@@ -132,7 +104,7 @@ export function Hero() {
       {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none"
-        style={{ opacity: scrollOpacity }}
+        style={{ opacity: scrollIndicatorOpacity }}
       >
         <motion.div
           className="flex flex-col items-center gap-2 text-white"

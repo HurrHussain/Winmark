@@ -4,6 +4,11 @@ import { motion, useTransform } from "framer-motion"
 import { Footer } from "@/components/sections/Footer"
 import { Navbar } from "@/components/sections/Navbar"
 import { ScrollProvider, useScrollContext } from "@/hooks/ScrollContext"
+import { InquiryProvider } from "@/hooks/InquiryContext"
+import { FloatingInquiryButton } from "@/components/products/FloatingInquiryButton"
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary"
+
+import { useSmartHide } from "@/hooks/useSmartHide"
 
 // Lazy load pages for better initial performance
 const HomePage = lazy(() => import("@/pages/HomePage").then(m => ({ default: m.HomePage })))
@@ -43,6 +48,7 @@ function FlyingLogo() {
   const { scrollY } = useScrollContext()
   const location = useLocation()
   const isHomePage = location.pathname === "/"
+  const isHidden = useSmartHide()
 
   // CORRECTED MATH:
   //   y: 240 → 6px  — lowered starting position so it sits cleanly inside the hero card
@@ -55,10 +61,14 @@ function FlyingLogo() {
   // ── SUBPAGES: static logo locked to its navbar resting position ──
   if (!isHomePage) {
     return (
-      <div
+      <motion.div
+        key="subpage-logo"
+        initial={{ y: 6, scale: 0.75 }}
+        animate={{ y: isHidden ? -120 : 6 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-0 left-0 w-full z-50 flex justify-center"
         style={{
-          transform: "translateY(6px) scale(0.75)",
+          scale: 0.75,
           transformOrigin: "top center",
           pointerEvents: "none",
         }}
@@ -70,24 +80,27 @@ function FlyingLogo() {
             className="h-28 w-auto object-contain"
           />
         </Link>
-      </div>
+        </motion.div>
     )
   }
 
   // ── HOMEPAGE: full scroll-driven flight ──
+  // key="homepage-logo" forces a complete remount (resetting Framer Motion's
+  // internal state) whenever we navigate back to the homepage, preventing
+  // the logo from inheriting the subpage's animated position.
   return (
     <motion.div
+      key="homepage-logo"
       style={{
         y: logoY,
         scale: logoScale,
-        willChange: "transform, opacity",
+        willChange: "transform",
       }}
       className="fixed top-0 left-0 w-full z-50 flex justify-center origin-top pointer-events-none"
-      // pointer-events-none on the outer div, auto on the link inside
     >
       <Link to="/" style={{ pointerEvents: "auto" }}>
         <img
-          src="./logo-full.png"
+          src={`${import.meta.env.BASE_URL}logo-full.png`}
           alt="Winmark Ingredients — Home"
           className="h-28 w-auto object-contain drop-shadow-sm"
         />
@@ -109,24 +122,29 @@ export function App() {
     <Router>
       <ScrollToTop />
       <ScrollProvider>
-        {/* FlyingLogo — page-level z-50 layer, owned by neither Hero nor Navbar */}
-        <FlyingLogo />
-        <div className="min-h-screen bg-white overflow-x-hidden flex flex-col">
-          <Navbar />
-          <main className="flex-1 flex flex-col">
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/services" element={<ServicesPage />} />
-                <Route path="/products" element={<ProductsPage />} />
-                <Route path="/history" element={<HistoryPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <Footer />
-        </div>
+        <InquiryProvider>
+          {/* FlyingLogo — page-level z-50 layer, owned by neither Hero nor Navbar */}
+          <FlyingLogo />
+          <ErrorBoundary fallbackMessage="The Inquiry List encountered an error. Please try clearing your selection.">
+            <FloatingInquiryButton />
+          </ErrorBoundary>
+          <div className="min-h-screen bg-white overflow-x-hidden flex flex-col">
+            <Navbar />
+            <main className="flex-1 flex flex-col">
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/services" element={<ServicesPage />} />
+                  <Route path="/products" element={<ProductsPage />} />
+                  <Route path="/history" element={<HistoryPage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <Footer />
+          </div>
+        </InquiryProvider>
       </ScrollProvider>
     </Router>
   )

@@ -5,6 +5,8 @@ import { Link, useLocation } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import { useScrollContext } from "@/hooks/ScrollContext"
 
+import { useSmartHide } from "@/hooks/useSmartHide"
+
 const leftLinks = [
   { label: "Home", to: "/" },
   { label: "Services", to: "/services" },
@@ -23,6 +25,7 @@ export function Navbar() {
   // Initialize as solid immediately on subpages — avoids a one-frame flash
   const [isSolid, setIsSolid] = useState(!isHomePage)
   const { scrollY } = useScrollContext()
+  const isHidden = useSmartHide()
 
   // Navbar bg: smooth opacity from 0→1 over scroll 300→450px.
   // Matches the window where the flying logo is landing and the hero card is gone.
@@ -42,20 +45,29 @@ export function Navbar() {
     return unsubscribe
   }, [scrollY, isHomePage])
 
+  // Hide logic: ONLY on subpages and only if the menu is NOT open
+  // We force false on homepage to prevent any navigation glitches
+  const shouldHide = !isHomePage && isHidden && !menuOpen
+
   return (
     <>
       {/* Navbar background:
           - Homepage: fades in smoothly via MotionValue as the logo lands (scroll 300→450px)
           - Subpages: always solid white, no scroll dependency, no flicker */}
       <motion.div
+        animate={{ y: shouldHide ? -120 : 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         style={{ opacity: isHomePage ? navBgOpacity : 1 }}
         className="fixed top-0 left-0 right-0 z-40 h-20 md:h-24 bg-white backdrop-blur-md border-b border-slate-100 pointer-events-none"
       />
 
       <motion.header
-        initial={isHomePage ? { y: -80, opacity: 0 } : false}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
+        initial={false}
+        animate={{ 
+          y: shouldHide ? -120 : 0,
+          opacity: 1 
+        }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-0 left-0 right-0 z-40"
       >
         <div className="relative max-w-7xl mx-auto px-6 lg:px-8 h-20 md:h-24 flex items-center">
@@ -163,7 +175,7 @@ export function Navbar() {
                 {isSolid && (
                   <motion.img
                     key="mobile-logo"
-                    src="./logo-full.png"
+                    src={`${import.meta.env.BASE_URL}logo-full.png`}
                     alt="Winmark Ingredients"
                     className="h-8 w-auto object-contain"
                     initial={{ opacity: 0 }}

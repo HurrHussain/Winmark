@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -78,6 +77,7 @@
   --winmark: #1e535e;
   --winmark-foreground: #ffffff;
   --winmark-light: #e8f4f6;
+  --midnight-slate: #0b1120;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

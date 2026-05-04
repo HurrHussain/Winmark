@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, type ReactNode } from "react"
 import { useMotionValue, type MotionValue } from "framer-motion"
+import { useLocation } from "react-router-dom"
 
 interface ScrollContextType {
   scrollY: MotionValue<number>
@@ -9,6 +10,13 @@ const ScrollCtx = createContext<ScrollContextType | null>(null)
 
 export function ScrollProvider({ children }: { children: ReactNode }) {
   const scrollY = useMotionValue(0)
+  const { pathname } = useLocation()
+
+  // Sync MotionValue with page top on route change to prevent "ghost" scroll positions
+  // causing animation jumps (like the FlyingLogo starting in its landed state).
+  useEffect(() => {
+    scrollY.set(0)
+  }, [pathname, scrollY])
 
   useEffect(() => {
     const onScroll = () => scrollY.set(window.scrollY)

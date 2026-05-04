@@ -1,10 +1,12 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, X, ArrowUpRight, Download, FileText } from 'lucide-react';
+import { Search, Filter, X, Table2 } from 'lucide-react';
 
-import { productsData, type Product } from '@/data/products';
+import { productsData } from '@/data/products';
 import { SidebarFilters } from '@/components/products/SidebarFilters';
-import { ProductCard } from '@/components/products/ProductCard';
+import { lazy, Suspense } from 'react';
+
+const ProductGrid = lazy(() => import('@/components/products/ProductGrid'));
 
 const CATEGORIES = Array.from(new Set(productsData.map(p => p.category)));
 
@@ -13,7 +15,6 @@ export function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   // Toggle Category Filter
   const toggleCategory = (category: string) => {
@@ -35,7 +36,7 @@ export function ProductsPage() {
 
 
   return (
-    <div className="min-h-screen bg-[#0f172a] pt-28 pb-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--midnight-slate)] pt-28 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1400px] mx-auto">
 
         {/* Page Header */}
@@ -73,7 +74,7 @@ export function ProductsPage() {
           <main className="w-full md:w-3/4 flex-1 flex flex-col gap-6">
 
             {/* Search Bar */}
-            <div className="relative">
+            <div className="relative mb-2">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <Search className="h-5 w-5 text-slate-400" />
               </div>
@@ -85,6 +86,11 @@ export function ProductsPage() {
                 className="w-full bg-[#1e293b] border border-slate-700 text-white rounded-xl pl-12 pr-4 py-4 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500 transition-all shadow-lg placeholder:text-slate-500 text-lg"
               />
             </div>
+            
+            {/* Global Spec Note */}
+            <p className="text-slate-500 text-xs leading-relaxed italic pl-1">
+              Note: Detailed Technical Data Sheets (TDS) and COA are available upon request. Please add items to your inquiry list or contact our technical team directly.
+            </p>
 
             {/* B2B Utility Bar */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-[#1e293b] p-4 rounded-xl border border-slate-700 shadow-sm gap-4 sm:gap-0">
@@ -92,42 +98,24 @@ export function ProductsPage() {
                 <div className="w-2 h-2 rounded-full bg-teal-500"></div>
                 Showing <span className="text-white font-bold">{filteredProducts.length}</span> Products
               </div>
-              <button
-                onClick={() => alert("Initiating secure download: Winmark_Product_Catalog_2026.pdf")}
+              <a
+                href={`${import.meta.env.BASE_URL}Winmark-Full-Catalog.xlsx`}
+                download="Winmark_Ingredients_Catalog.xlsx"
                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-teal-400 border border-teal-500/50 rounded-lg hover:bg-slate-800 hover:border-teal-400 transition-colors w-full sm:w-auto justify-center"
               >
-                <Download size={16} />
-                Download Full Catalog (PDF)
-              </button>
+                <Table2 size={16} />
+                Download Product List (Excel)
+              </a>
             </div>
 
-            {/* Product Grid - 3 columns on desktop, 1 on mobile */}
-            {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map((product, idx) => (
-                  <ProductCard 
-                    key={`${product.name}-${idx}`}
-                    product={product}
-                    index={idx}
-                    onClick={() => setSelectedProduct(product)}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-20 px-4 bg-[#1e293b] rounded-xl border border-slate-700 border-dashed text-center">
-                <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4">
-                  <Search className="w-8 h-8 text-slate-500" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">No products found</h3>
-                <p className="text-slate-400 max-w-md">We couldn't find anything matching your current filters and search query. Try adjusting your selections.</p>
-                <button
-                  onClick={() => { setSearchQuery(""); setSelectedCategories([]); }}
-                  className="mt-6 text-teal-400 font-semibold hover:text-teal-300 transition-colors"
-                >
-                  Clear all filters
-                </button>
-              </div>
-            )}
+            {/* Product Grid (Lazy Loaded) */}
+            <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center text-teal-500/50">Loading Products...</div>}>
+              <ProductGrid 
+                filteredProducts={filteredProducts}
+                setSearchQuery={setSearchQuery}
+                setSelectedCategories={setSelectedCategories}
+              />
+            </Suspense>
 
           </main>
         </div>
@@ -184,72 +172,7 @@ export function ProductsPage() {
         ) : null}
       </AnimatePresence>
 
-      {/* Product Detail Modal */}
-      <AnimatePresence>
-        {selectedProduct ? (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-              onClick={() => setSelectedProduct(null)}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl bg-[#0f172a] rounded-2xl border border-teal-500/30 shadow-2xl shadow-teal-900/20 overflow-hidden flex flex-col"
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedProduct(null)}
-                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-full transition-colors z-10"
-                aria-label="Close product details"
-              >
-                <X size={24} />
-              </button>
 
-              <div className="p-8 md:p-10">
-                {/* Badges */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-3 py-1 text-xs uppercase tracking-wider font-bold bg-teal-500/20 text-teal-400 rounded-full border border-teal-500/30">
-                    {selectedProduct.category}
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 pr-8 leading-tight">
-                  {selectedProduct.name}
-                </h2>
-
-                {/* Dummy Content */}
-                <div className="space-y-4 mb-10 border-t border-slate-800 pt-6">
-                  <h4 className="text-teal-400 font-semibold flex items-center gap-2">
-                    <FileText size={18} />
-                    Product Specification
-                  </h4>
-                  <p className="text-slate-300 leading-relaxed text-lg font-light">
-                    This specification sheet contains detailed physical, chemical, and microbiological analysis for this ingredient. All parameters are tested according to ISO industry standards to ensure consistent quality for manufacturing.
-                  </p>
-                </div>
-
-                {/* Action Button */}
-                <button
-                  onClick={() => {
-                    alert(`Requesting Spec Sheet for: ${selectedProduct.name}`);
-                    setSelectedProduct(null);
-                  }}
-                  className="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-teal-600/30 text-lg"
-                >
-                  Request Spec Sheet
-                  <ArrowUpRight size={20} />
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        ) : null}
-      </AnimatePresence>
     </div>
   );
 }

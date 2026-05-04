@@ -1,0 +1,2 @@
+# This file tells GitHub Pages not to run the site through Jekyll.
+# This is important for Vite projects to ensure assets are served correctly.

@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useInquiry } from '@/hooks/InquiryContext';
 
 export function ContactPage() {
+  const [searchParams] = useSearchParams();
+  const { clearItems } = useInquiry();
+
   // Sets up the state to hold the form data
   const [formData, setFormData] = useState({
     firstName: '',
@@ -11,6 +16,20 @@ export function ContactPage() {
     message: '',
     website: '' // Honeypot field
   });
+
+  // Auto-populate message from URL params (from inquiry system)
+  useEffect(() => {
+    const message = searchParams.get('message');
+    if (message) {
+      setFormData(prev => ({
+        ...prev,
+        message: message,
+        inquiryType: 'Bulk Ingredients'
+      }));
+      // Clear the inquiry list now that we've captured it
+      clearItems();
+    }
+  }, [searchParams, clearItems]);
 
   // State to handle loading and success/error screens
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,13 +48,31 @@ export function ContactPage() {
     setErrorMsg('');
 
     try {
+      // Sanitize inputs before sending to prevent basic injection
+      const sanitizeInput = (str: string) => {
+        if (typeof str !== 'string') return '';
+        return str.replace(/<[^>]*>?/gm, ''); // Strip HTML tags
+      };
+
+      const sanitizedData = {
+        firstName: sanitizeInput(formData.firstName),
+        lastName: sanitizeInput(formData.lastName),
+        email: sanitizeInput(formData.email),
+        companyName: sanitizeInput(formData.companyName),
+        inquiryType: sanitizeInput(formData.inquiryType),
+        message: sanitizeInput(formData.message),
+        website: sanitizeInput(formData.website)
+      };
+
+      const apiUrl = import.meta.env.VITE_CONTACT_API_URL || 'https://winmarkingredients.com/contact.php';
+
       // Sends the data to your live cPanel PHP file
-      const response = await fetch('https://winmarkingredients.com/contact.php', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(sanitizedData)
       });
 
       const data = await response.json();

@@ -1,4 +1,3 @@
-import { motion } from "framer-motion"
 import { MapPin, Phone, Mail } from "lucide-react"
 import { Link } from "react-router-dom"
 
@@ -30,61 +29,39 @@ const CURRENT_YEAR = new Date().getFullYear()
 
 export function Footer() {
   return (
-    <footer id="contact" style={{ backgroundColor: "#1e535e" }}>
-      {/* Top band — contact email feature */}
-      <div className="border-b border-white/10 py-16 px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-white/50 mb-2">
-              Get In Touch
-            </p>
-            <a
-              href="mailto:info@winmarkingredients.com"
-              className="text-2xl md:text-3xl lg:text-4xl font-bold text-white hover:text-white/80 transition-colors tracking-tight break-all"
-            >
-              info@winmarkingredients.com
-            </a>
-          </motion.div>
-        </div>
-      </div>
-
+    <footer
+      id="contact"
+      className="text-slate-200 relative bg-[var(--midnight-slate)]"
+    >
       {/* Main footer grid */}
-      <div className="py-16 px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="py-24 px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
           {/* Brand column */}
           <div className="lg:col-span-1">
-            <div className="flex flex-col items-start gap-4 mb-4">
+            <div className="flex flex-col items-start gap-4 mb-8">
               <img
-                src="./logo-full.png"
+                src={`${import.meta.env.BASE_URL}logo-full.png`}
                 alt="Winmark Logo"
-                className="h-20 md:h-24 w-auto object-contain object-left brightness-0 invert"
+                className="h-20 md:h-26 w-auto object-contain object-left"
               />
-              <span className="font-bold text-lg tracking-wide text-white uppercase">WINMARK INGREDIENTS PVT LTD</span>
+              <span className="text-[10px] font-bold tracking-[0.4em] text-white 500 uppercase">Winmark Ingredients Pvt Ltd</span>
             </div>
-            <p className="text-sm text-white/60 leading-relaxed mb-5">
-              Premier sourcing and distribution of food ingredients for Pakistan's leading manufacturers since 2001.
-            </p>
-            <p className="text-xs text-white/40 tracking-widest uppercase">
-              Winmark Ingredients Pvt. Ltd.
+            <p className="text-sm text-slate-400 leading-[1.8] mb-8 font-medium">
+              Premier sourcing and distribution of industrial food ingredients for Pakistan's leading manufacturers. Engineering resilient supply chains since 2001.
             </p>
           </div>
 
           {/* Navigation */}
-          <div>
-            <h4 className="text-xs font-bold tracking-[0.15em] uppercase text-white/50 mb-5">
+          <div className="lg:pl-12">
+            <h4 className="text-xs font-black tracking-[0.2em] uppercase text-white mb-8">
               Navigation
             </h4>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
-                    className="text-sm text-white/70 hover:text-white transition-colors font-medium"
+                    className="text-sm text-slate-400 hover:text-teal-400 transition-all duration-300 font-bold uppercase tracking-widest"
                   >
                     {link.label}
                   </Link>
@@ -96,26 +73,45 @@ export function Footer() {
           {/* Warehouses */}
           {warehouses.map((w) => (
             <div key={w.city}>
-              <h4 className="text-xs font-bold tracking-[0.15em] uppercase text-white/50 mb-5">
-                {w.city} Office
+              <h4 className="text-xs font-black tracking-[0.2em] uppercase text-white mb-8">
+                {w.city} HUB
               </h4>
-              <div className="flex flex-col gap-3">
-                <div className="flex items-start gap-2.5 group">
-                  <MapPin className="w-4 h-4 text-white/40 mt-0.5 shrink-0 group-hover:text-white/70 transition-colors" />
-                  <a href={w.mapLink} target="_blank" rel="noopener noreferrer" className="flex-col">
-                    <p className="text-sm text-white/80 font-medium group-hover:text-white transition-colors">{w.address}</p>
-                    <p className="text-xs text-white/40 mt-0.5">{w.detail}</p>
+              <div className="flex flex-col gap-6">
+                <div className="flex items-start gap-4 group">
+                  <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-teal-500/20 transition-colors">
+                    <MapPin className="w-4 h-4 text-teal-500" />
+                  </div>
+                  <a
+                    href={w.mapLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col group-hover:translate-x-1 transition-transform"
+                  >
+                    <p className="text-sm text-slate-300 font-bold group-hover:text-white transition-colors">{w.address}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mt-1">{w.detail}</p>
                   </a>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-white/40 shrink-0" />
-                  <a href={`tel:${w.phone}`} className="text-sm text-white/70 hover:text-white transition-colors">
+
+                <div className="flex items-center gap-4 group">
+                  <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-teal-500/20 transition-colors">
+                    <Phone className="w-4 h-4 text-teal-500" />
+                  </div>
+                  <a
+                    href={`tel:${w.phone.replace(/\s+/g, '')}`}
+                    className="text-sm text-slate-300 font-bold group-hover:text-white transition-colors"
+                  >
                     {w.phone}
                   </a>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <Mail className="w-4 h-4 text-white/40 shrink-0" />
-                  <a href="mailto:info@winmarkingredients.com" className="text-sm text-white/70 hover:text-white transition-colors">
+
+                <div className="flex items-center gap-4 group">
+                  <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-teal-500/20 transition-colors">
+                    <Mail className="w-4 h-4 text-teal-500" />
+                  </div>
+                  <a
+                    href="mailto:info@winmarkingredients.com"
+                    className="text-sm text-slate-300 font-bold group-hover:text-white transition-colors"
+                  >
                     info@winmarkingredients.com
                   </a>
                 </div>
@@ -125,15 +121,24 @@ export function Footer() {
         </div>
       </div>
 
+      {/* Thin Horizontal Rule */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="h-px w-full bg-white opacity-10" />
+      </div>
+
       {/* Bottom bar */}
-      <div className="border-t border-white/10 py-5 px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/35">
-            © {CURRENT_YEAR} Winmark Ingredients Pvt. Ltd. All rights reserved.
+      <div className="py-10 px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
+            © {CURRENT_YEAR} Winmark Ingredients Pvt. Ltd.
           </p>
-          <p className="text-xs text-white/35">
-            Karachi · Lahore · Pakistan
-          </p>
+          <div className="flex gap-8">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Karachi</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-teal-900">/</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Lahore</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-teal-900">/</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Pakistan</span>
+          </div>
         </div>
       </div>
     </footer>

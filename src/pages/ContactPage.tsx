@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { MapPin, Phone, Mail } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { useInquiry } from '@/hooks/InquiryContext';
 
@@ -182,15 +183,15 @@ export function ContactPage() {
               </div>
               <div className="p-5 bg-gray-50 space-y-4">
                 <a href="https://maps.google.com/?q=Industrial+Area,+SITE,+Karachi,+Pakistan" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 group/link cursor-pointer">
-                  <span className="text-teal-700 mt-0.5 group-hover/link:scale-110 transition-transform">📍</span>
+                  <MapPin className="text-teal-700 mt-0.5 group-hover/link:scale-110 transition-transform" aria-hidden="true" />
                   <p className="text-sm text-gray-600 group-hover/link:text-teal-700 transition-colors">Industrial Area, SITE, Karachi<br />Pakistan</p>
                 </a>
                 <a href="tel:+923202890846" className="flex items-center gap-3 group/link cursor-pointer">
-                  <span className="text-teal-700 group-hover/link:scale-110 transition-transform">📞</span>
+                  <Phone className="text-teal-700 group-hover/link:scale-110 transition-transform" aria-hidden="true" />
                   <p className="text-sm text-gray-600 group-hover/link:text-teal-700 transition-colors">+92 320 2890846</p>
                 </a>
                 <a href="mailto:info@winmarkingredients.com" className="flex items-center gap-3 group/link cursor-pointer">
-                  <span className="text-teal-700 group-hover/link:scale-110 transition-transform">✉️</span>
+                  <Mail className="text-teal-700 group-hover/link:scale-110 transition-transform" aria-hidden="true" />
                   <p className="text-sm text-gray-600 group-hover/link:text-teal-700 transition-colors break-all">info@winmarkingredients.com</p>
                 </a>
               </div>

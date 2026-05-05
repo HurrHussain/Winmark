@@ -115,21 +115,20 @@ export function HistoryPage() {
           <div className="absolute inset-0 pointer-events-none opacity-50 z-10" style={GRAIN_STYLE} />
 
           {/* Large background parallax year */}
-          <motion.div
-            className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0"
-          >
-            <span
-              className="text-[25vw] font-black leading-none"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                color: "transparent",
-                WebkitTextStroke: "1px rgba(255,255,255,0.05)",
-                letterSpacing: "-0.05em",
-              }}
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0"
             >
-              2001
-            </span>
-          </motion.div>
+              <span
+                className="text-[25vw] font-black leading-none font-display"
+                style={{
+                  color: "transparent",
+                  WebkitTextStroke: "1px rgba(255,255,255,0.05)",
+                  letterSpacing: "-0.05em",
+                }}
+              >
+                2001
+              </span>
+            </motion.div>
 
           {/* Ambient Glow */}
           <div
@@ -159,12 +158,8 @@ export function HistoryPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.1 }}
-              className="text-7xl md:text-9xl font-bold leading-tight mb-10"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontStyle: "italic",
-                letterSpacing: "-0.04em",
-              }}
+              className="text-7xl md:text-9xl font-bold leading-tight mb-10 font-display italic"
+              style={{ letterSpacing: "-0.04em" }}
             >
               Industrial <br />
               <span className="text-teal-500/90">Heritage.</span>
@@ -234,8 +229,8 @@ export function HistoryPage() {
 
           <div className="relative z-10 max-w-3xl mx-auto">
             <h2
-              className="text-5xl md:text-7xl font-bold mb-10 text-white"
-              style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+              className="text-5xl md:text-7xl font-bold mb-10 text-white font-display italic"
+              style={{ letterSpacing: "-0.04em" }}
             >
               The Journey Continues.
             </h2>

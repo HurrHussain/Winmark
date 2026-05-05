@@ -15,7 +15,8 @@ const HomePage = lazy(() => import("@/pages/HomePage").then(m => ({ default: m.H
 const ServicesPage = lazy(() => import("@/pages/ServicesPage").then(m => ({ default: m.ServicesPage })))
 const ProductsPage = lazy(() => import("@/pages/ProductsPage").then(m => ({ default: m.ProductsPage })))
 const HistoryPage = lazy(() => import("@/pages/HistoryPage").then(m => ({ default: m.HistoryPage })))
-const AboutPage = lazy(() => import("@/pages/AboutPage").then(m => ({ default: m.AboutPage })))
+const AboutPage = lazy(() => import("@/pages/AboutPage"));
+const TeamPage = lazy(() => import("@/pages/about/TeamPage").then(m => ({ default: m.TeamPage })))
 const ContactPage = lazy(() => import("@/pages/ContactPage").then(m => ({ default: m.ContactPage })))
 
 // Simple loading fallback
@@ -29,8 +30,8 @@ const PageLoader = () => (
  * FlyingLogo — Page-level fixed element. Belongs to neither Hero nor Navbar.
  *
  * THE MATH (Absolute Pixel Mapping):
- *   logoY:     scroll 0→450px  maps to  y 260→16px
- *              At 0px: logo sits 260px from top, visually centered over the hero card at 2.5 scale.
+ *   logoY:     scroll 0→450px  maps to  y 270→16px
+ *              At 0px: logo sits 270px from top, visually centered over the hero card at 2.5 scale.
  *              At 450px: logo lands 16px from top, centered inside the navbar strip.
  *
  *   logoScale: scroll 0→450px  maps to  scale 2.5→0.9
@@ -51,11 +52,11 @@ function FlyingLogo() {
   const isHidden = useSmartHide()
 
   // CORRECTED MATH:
-  //   y: 240 → 6px  — lowered starting position so it sits cleanly inside the hero card
+  //   y: 270 → 6px  — lowered starting position so it sits cleanly inside the hero card
   //   scale: 1.9 → 0.75 — larger in hero, but smaller to fit perfectly inside the 96px tall navbar
-  // At 1.9x: logo height = 112*1.9 = 212px, bottom = 240+212 = 452px
-  // Card content starts after spacer ≈ 456px — snug fit with no overlap
-  const logoY = useTransform(scrollY, [0, 450], [240, 6])
+  // At 1.9x: logo height = 112*1.9 = 212px, bottom = 270+212 = 482px
+  // Card content starts after spacer ≈ 456px — slightly lower, with no overlap
+  const logoY = useTransform(scrollY, [0, 550], [250, 6])
   const logoScale = useTransform(scrollY, [0, 450], [1.9, 0.75])
 
   // ── SUBPAGES: static logo locked to its navbar resting position ──
@@ -138,6 +139,7 @@ export function App() {
                   <Route path="/products" element={<ProductsPage />} />
                   <Route path="/history" element={<HistoryPage />} />
                   <Route path="/about" element={<AboutPage />} />
+                  <Route path="/about/team" element={<TeamPage />} />
                   <Route path="/contact" element={<ContactPage />} />
                 </Routes>
               </Suspense>

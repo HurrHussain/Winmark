@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence, useTransform } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ChevronDown } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import { useScrollContext } from "@/hooks/ScrollContext"
@@ -15,11 +15,18 @@ const leftLinks = [
 
 const rightLinks = [
   { label: "History", to: "/history" },
-  { label: "About Us", to: "/about" },
+  { 
+    label: "About Us", 
+    to: "/about",
+    subItems: [
+      { label: "Our Team", to: "/about/team" }
+    ]
+  },
 ]
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const location = useLocation()
   const isHomePage = location.pathname === "/"
   // Initialize as solid immediately on subpages — avoids a one-frame flash
@@ -122,34 +129,90 @@ export function Navbar() {
             <div className="flex items-center justify-end gap-6 flex-1">
               {rightLinks.map((link) => {
                 const isActive = location.pathname === link.to
+                const hasSubItems = link.subItems && link.subItems.length > 0
+                const dropdownId = 'dropdown-' + link.label.replace(/\s+/g, '-').toLowerCase()
+
                 return (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    className={cn(
-                      "relative text-[15px] font-bold tracking-wide transition-colors duration-200 px-2 py-1",
-                      isActive
-                        ? "text-[#1e535e]"
-                        : isSolid
-                          ? "text-slate-700 hover:text-[#1e535e]"
-                          : "text-white/90 hover:text-white"
-                    )}
+                  <div 
+                    key={link.to} 
+                    className="relative group"
+                    onMouseEnter={() => hasSubItems && setActiveDropdown(link.label)}
+                    onMouseLeave={() => hasSubItems && setActiveDropdown(null)}
+                    onFocus={() => hasSubItems && setActiveDropdown(link.label)}
+                    onBlur={() => hasSubItems && setActiveDropdown(null)}
                   >
-                    {link.label}
-                    {isActive && (
-                      <motion.div
-                        layoutId="nav-underline"
-                        className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-[#1e535e]"
-                        transition={{ 
-                          type: "spring", 
-                          stiffness: 500, 
-                          damping: 38,
-                          mass: 1,
-                          restDelta: 0.001
-                        }}
-                      />
+                    <Link
+                      to={link.to}
+                      className={cn(
+                        "relative text-[15px] font-bold tracking-wide transition-colors duration-200 px-2 py-1 flex items-center gap-1",
+                        isActive
+                          ? "text-[#1e535e]"
+                          : isSolid
+                            ? "text-slate-700 hover:text-[#1e535e]"
+                            : "text-white/90 hover:text-white"
+                      )}
+                      aria-haspopup={hasSubItems ? "true" : undefined}
+                      aria-expanded={hasSubItems ? (activeDropdown === link.label).toString() : undefined}
+                      onKeyDown={(e) => {
+                        if (!hasSubItems) return
+                        if (e.key === 'ArrowDown' || e.key === ' ' ) {
+                          e.preventDefault()
+                          setActiveDropdown(link.label)
+                        }
+                      }}
+                    >
+                      {link.label}
+                      {hasSubItems && (
+                        <ChevronDown className={cn(
+                          "w-4 h-4 transition-transform duration-200",
+                          activeDropdown === link.label && "rotate-180"
+                        )} />
+                      )}
+                      {isActive && (
+                        <motion.div
+                          layoutId="nav-underline"
+                          className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-[#1e535e]"
+                          transition={{ 
+                            type: "spring", 
+                            stiffness: 500, 
+                            damping: 38,
+                            mass: 1,
+                            restDelta: 0.001
+                          }}
+                        />
+                      )}
+                    </Link>
+
+                    {/* Desktop Dropdown */}
+                    {hasSubItems && (
+                      <AnimatePresence>
+                        {activeDropdown === link.label && (
+                          <motion.div
+                            id={dropdownId}
+                            role="menu"
+                            aria-label={`${link.label} submenu`}
+                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                            transition={{ duration: 0.2, ease: "easeOut" }}
+                            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-[#0b1120] backdrop-blur-md border border-teal-500/20 rounded-xl overflow-hidden shadow-2xl z-50 py-2"
+                          >
+                            {link.subItems?.map((sub) => (
+                              <Link
+                                key={sub.to}
+                                to={sub.to}
+                                role="menuitem"
+                                tabIndex={0}
+                                className="block px-4 py-2.5 text-sm font-medium text-white/80 hover:text-white hover:bg-teal-500/10 transition-colors"
+                              >
+                                {sub.label}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     )}
-                  </Link>
+                  </div>
                 )
               })}
 
@@ -209,27 +272,70 @@ export function Navbar() {
               <div className="px-6 py-4 flex flex-col gap-1">
                 {[...leftLinks, ...rightLinks].map((link) => {
                   const isActive = location.pathname === link.to
+                  const hasSubItems = link.subItems && link.subItems.length > 0
+                  const isDropdownOpen = activeDropdown === link.label
+
                   return (
-                    <Link
-                      key={link.to}
-                      to={link.to}
-                      onClick={() => setMenuOpen(false)}
-                      className={cn(
-                        "relative text-sm font-semibold transition-all px-4 py-2.5 rounded-md",
-                        isActive
-                          ? "text-white shadow-sm"
-                          : "text-slate-600 hover:text-[#1e535e] hover:bg-slate-50"
+                    <div key={link.to} className="flex flex-col">
+                      <div className="flex items-center justify-between w-full">
+                        <Link
+                          to={link.to}
+                          onClick={() => setMenuOpen(false)}
+                          className={cn(
+                            "flex-1 relative text-sm font-semibold transition-all px-4 py-2.5 rounded-md",
+                            isActive
+                              ? "text-white shadow-sm"
+                              : "text-slate-600 hover:text-[#1e535e] hover:bg-slate-50"
+                          )}
+                        >
+                          {isActive && (
+                            <motion.div
+                              layoutId="mobile-nav-pill"
+                              className="absolute inset-0 bg-[#1e535e] rounded-md -z-10"
+                              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                            />
+                          )}
+                          {link.label}
+                        </Link>
+                        
+                        {hasSubItems && (
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              setActiveDropdown(activeDropdown === link.label ? null : link.label)
+                            }}
+                            className="p-2.5 text-slate-400 hover:text-[#1e535e]"
+                          >
+                            <ChevronDown className={cn("w-4 h-4 transition-transform", isDropdownOpen && "rotate-180")} />
+                          </button>
+                        )}
+                      </div>
+
+                      {hasSubItems && (
+                        <AnimatePresence>
+                          {isDropdownOpen && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="overflow-hidden bg-slate-50/50 rounded-lg mx-2 mb-2"
+                            >
+                              {link.subItems?.map((sub) => (
+                                <Link
+                                  key={sub.to}
+                                  to={sub.to}
+                                  onClick={() => setMenuOpen(false)}
+                                  className="block px-8 py-2 text-sm font-medium text-slate-500 hover:text-[#1e535e] transition-colors"
+                                >
+                                  {sub.label}
+                                </Link>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       )}
-                    >
-                      {isActive && (
-                        <motion.div
-                          layoutId="mobile-nav-pill"
-                          className="absolute inset-0 bg-[#1e535e] rounded-md -z-10"
-                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                        />
-                      )}
-                      {link.label}
-                    </Link>
+                    </div>
                   )
                 })}
                 <Link

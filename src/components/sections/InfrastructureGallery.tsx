@@ -49,12 +49,12 @@ export default function InfrastructureGallery() {
                 ))}
               </ul>
             </div>
-            <div className="order-1 lg:order-2 relative aspect-video lg:aspect-square overflow-hidden rounded-2xl group min-h-[300px] w-full">
+            <div className="grid grid-cols- lg:grid-cols- gap- items-left order-1 lg:order-2 relative aspect-video lg:aspect-square overflow-hidden rounded-2x1 group min-h-[300px] w-full">
               <img 
                 loading="lazy" decoding="async"
-                src="https://images.unsplash.com/photo-1586191582151-f705663764b8?auto=format&fit=crop&q=80" 
+                src="logistic-fleet.jpg" 
                 alt="Fleet Logistics"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-cover rounded-2xl shadow-lg"
               />
               <div className="absolute inset-0 bg-teal-900/10 mix-blend-overlay" />
             </div>

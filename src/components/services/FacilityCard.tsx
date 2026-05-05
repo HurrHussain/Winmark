@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 
 interface FacilityCardProps {
   title: string;
+  image: string;
   imageAlt: string;
   imagePlaceholderText: string;
   Icon: LucideIcon;
@@ -14,7 +15,7 @@ interface FacilityCardProps {
   index: number;
 }
 
-export function FacilityCard({ title, imageAlt, imagePlaceholderText, Icon, features, index }: FacilityCardProps) {
+export function FacilityCard({ title, image, imageAlt, imagePlaceholderText, Icon, features, index }: FacilityCardProps) {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -25,8 +26,16 @@ export function FacilityCard({ title, imageAlt, imagePlaceholderText, Icon, feat
     >
       <div 
         className="h-64 flex items-center justify-center bg-slate-800/30 m-6 rounded-xl border-2 border-dashed border-slate-600/50 group-hover:border-teal-500/50 transition-colors duration-300 relative overflow-hidden"
+        role="img"
         aria-label={imageAlt}
       >
+        <img
+          src={image}
+          alt={imageAlt}
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          style={{ objectFit: 'cover' }}
+          onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+        />
         <span className="text-slate-400 font-bold tracking-[0.2em] uppercase text-sm px-6 text-center leading-relaxed relative z-10">
           {imagePlaceholderText}
         </span>

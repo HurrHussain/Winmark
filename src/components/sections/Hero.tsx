@@ -36,7 +36,7 @@ export function Hero() {
         style={{ opacity: cardOpacity }}
       >
         <motion.div
-          className="relative max-w-4xl w-full text-center px-10 py-8 rounded-[3rem] mx-6 overflow-hidden"
+          className="relative max-w-4xl w-full text-center px-10 py-6 rounded-[3rem] mx-6 overflow-hidden"
           style={{
             background: "rgba(255,255,255,0.10)",
             backdropFilter: "blur(20px)",
@@ -57,7 +57,7 @@ export function Hero() {
           />
 
           {/* Safety gap: space for the Flying Logo at 2.5 scale hovering above the card */}
-          <div className="h-44 w-full" />
+          <div className="h-40 w-full" />
 
           {/* Accent line */}
           <div className="flex items-center justify-center gap-4 mb-8">

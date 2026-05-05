@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, X, Table2 } from 'lucide-react';
 
@@ -15,6 +15,9 @@ export function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
 
   // Toggle Category Filter
   const toggleCategory = (category: string) => {
@@ -33,6 +36,65 @@ export function ProductsPage() {
     });
   }, [searchQuery, selectedCategories, products]);
 
+  // Focus trap and return-focus for mobile filters modal
+  useEffect(() => {
+    if (!mobileFiltersOpen) return;
+
+    const previousActive = document.activeElement as HTMLElement | null;
+    const modal = modalRef.current;
+    const focusableSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const nodes = modal ? Array.from(modal.querySelectorAll<HTMLElement>(focusableSelector)) : [];
+    const first = nodes[0] ?? closeButtonRef.current;
+    const last = nodes[nodes.length - 1] ?? closeButtonRef.current;
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setMobileFiltersOpen(false);
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        if (nodes.length === 0) {
+          e.preventDefault();
+          closeButtonRef.current?.focus();
+          return;
+        }
+
+        const active = document.activeElement as HTMLElement | null;
+        if (e.shiftKey) {
+          if (active === first || active === modal) {
+            e.preventDefault();
+            last?.focus();
+          }
+        } else {
+          if (active === last) {
+            e.preventDefault();
+            first?.focus();
+          }
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKey);
+
+    // Move focus into the modal
+    setTimeout(() => {
+      (first ?? closeButtonRef.current)?.focus();
+    }, 0);
+
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      // Return focus to the trigger or previous element
+      try {
+        if (triggerRef.current) triggerRef.current.focus();
+        else if (previousActive && typeof previousActive.focus === 'function') previousActive.focus();
+      } catch (err) {
+        // ignore
+      }
+    };
+  }, [mobileFiltersOpen]);
+
 
 
   return (
@@ -47,6 +109,7 @@ export function ProductsPage() {
           </div>
 
           <button
+            ref={triggerRef}
             onClick={() => setMobileFiltersOpen(true)}
             className="md:hidden flex items-center gap-2 bg-[#1e293b] text-white px-4 py-2 rounded-lg border border-slate-700 w-max"
           >
@@ -137,11 +200,16 @@ export function ProductsPage() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              ref={modalRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="filters-title"
               className="fixed inset-y-0 right-0 w-[85%] sm:w-[350px] bg-[#1e293b] border-l border-slate-700 z-50 shadow-2xl flex flex-col"
             >
               <div className="p-4 border-b border-slate-700 flex items-center justify-between">
-                <h2 className="text-white font-bold text-lg">Filters</h2>
+                <h2 id="filters-title" className="text-white font-bold text-lg">Filters</h2>
                 <button 
+                  ref={closeButtonRef}
                   onClick={() => setMobileFiltersOpen(false)} 
                   className="text-slate-400 hover:text-white p-2"
                   aria-label="Close filters"
@@ -171,6 +239,9 @@ export function ProductsPage() {
           </>
         ) : null}
       </AnimatePresence>
+
+      {/* Focus trap for Mobile Filters Modal */}
+      <script /* noop: kept for patch separation */ />
 
 
     </div>

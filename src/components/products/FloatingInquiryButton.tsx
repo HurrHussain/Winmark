@@ -104,6 +104,8 @@ export function FloatingInquiryButton() {
                   </span>
                   <button
                     onClick={() => removeItem(item)}
+                    aria-label={`Remove ${item} from inquiry list`}
+                    title={`Remove ${item}`}
                     className="text-slate-500 hover:text-red-400 transition-colors shrink-0"
                   >
                     <X size={12} />

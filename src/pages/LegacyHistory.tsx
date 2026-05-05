@@ -187,24 +187,23 @@ export function LegacyHistoryPage() {
         <div className="absolute inset-0 pointer-events-none opacity-60" style={GRAIN_STYLE} />
 
         {/* Parallax background year */}
-        <motion.div
-          style={{ y: bgYearY }}
-          className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
-          aria-hidden="true"
-        >
-          <span
-            className="text-[22vw] font-black leading-none"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              color: "transparent",
-              WebkitTextStroke: "1px rgba(255,255,255,0.06)",
-              letterSpacing: "-0.04em",
-              userSelect: "none",
-            }}
+          <motion.div
+            style={{ y: bgYearY }}
+            className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+            aria-hidden="true"
           >
-            2001
-          </span>
-        </motion.div>
+            <span
+              className="text-[22vw] font-black leading-none font-display"
+              style={{
+                color: "transparent",
+                WebkitTextStroke: "1px rgba(255,255,255,0.06)",
+                letterSpacing: "-0.04em",
+                userSelect: "none",
+              }}
+            >
+              2001
+            </span>
+          </motion.div>
 
         {/* Radial ambient glow */}
         <div
@@ -252,7 +251,7 @@ export function LegacyHistoryPage() {
             >
               Excellence.
             </em>
-          </motion.h1>
+          <motion.div
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -260,9 +259,8 @@ export function LegacyHistoryPage() {
             transition={{ duration: 0.8, delay: 0.25 }}
             className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-light"
             style={{ lineHeight: "1.8" }}
+            className="text-2xl font-bold text-teal-400 font-display italic"
           >
-            From a single warehouse in Karachi to a national ingredient powerhouse — every year of this journey was built on precision, partnership, and purpose.
-          </motion.p>
 
           {/* Scroll cue */}
           <motion.div
@@ -284,17 +282,12 @@ export function LegacyHistoryPage() {
       {/* ── MILESTONES ───────────────────────────────────────────────── */}
       <section className="relative py-28 px-6 md:px-12 lg:px-20">
         {/* Section intro */}
-        <motion.div
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7 }}
-          className="max-w-7xl mx-auto mb-24 text-center"
-        >
-          <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-teal-500/70">
-            2001 — 2018
-          </span>
-          <h2
+          className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight font-display italic"
             className="mt-3 text-5xl md:text-6xl font-bold text-white"
             style={{
               fontFamily: "'Playfair Display', serif",
@@ -317,13 +310,12 @@ export function LegacyHistoryPage() {
         </div>
 
         {/* Chapter transition */}
-        <motion.div
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="max-w-3xl mx-auto text-center mt-8 py-20 border-t border-slate-800"
-        >
+          className="text-slate-300 font-light leading-relaxed text-base md:text-lg"
           <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-teal-500/70 block mb-4">
             What Came Next
           </span>

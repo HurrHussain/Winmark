@@ -9,18 +9,7 @@ export function History() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: "-80px" })
 
-  // Magnetic button state
-  const btnRef = useRef<HTMLAnchorElement>(null)
-  const [btnStyle, setBtnStyle] = useState({ x: 0, y: 0 })
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = e.clientX - rect.left - rect.width / 2
-    const y = e.clientY - rect.top - rect.height / 2
-    setBtnStyle({ x: x * 0.25, y: y * 0.25 })
-  }
-
-  const handleMouseLeave = () => setBtnStyle({ x: 0, y: 0 })
+  // ...existing code...
 
   return (
     <section id="history" className="bg-slate-900 py-28 px-6 lg:px-8 overflow-hidden">
@@ -55,58 +44,62 @@ export function History() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-5xl mx-auto bg-[#1e293b]/80 border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl relative"
+          className="max-w-5xl mx-auto bg-[#0b1120] border border-slate-900 rounded-2xl overflow-hidden shadow-2xl relative"
         >
           {/* Subtle glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1e535e]/20 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1e535e]/10 to-transparent pointer-events-none" />
 
-          <div className="grid grid-cols-1 md:grid-cols-5 relative z-10">
-
-            {/* Left Column - Image */}
-            <div className="md:col-span-2 p-6 md:p-8 flex items-center justify-center bg-slate-900/40">
-              <div className="w-full aspect-[4/5] relative rounded-xl overflow-hidden border border-slate-700/50 bg-slate-800 shadow-inner">
-                <img
-                  src="./riaz.png"
-                  alt="Riaz — Leadership Vision"
-                  className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.style.background =
-                      'linear-gradient(to bottom right, #1e293b, #0f172a)';
-                  }}
-                />
-              </div>
+          <div className="md:flex items-center gap-12 md:gap-16 relative z-10">
+            {/* Left Column - Chairman Card */}
+            <div className="flex-shrink-0 flex items-start md:items-center w-full md:w-auto justify-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                className="w-48 md:w-64 bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col"
+                style={{ minWidth: '12rem' }}
+              >
+                <div className="w-full aspect-[3/4] bg-slate-900 overflow-hidden">
+                  <img
+                    src="/riaz-hussain.jpg"
+                    alt="Riaz Hussain — Chairman & Visionary"
+                    className="w-full h-full object-cover object-top aspect-[3/4]"
+                    onError={(e) => {
+                      e.currentTarget.src = 'riaz.png';
+                    }}
+                  />
+                </div>
+                <div className="px-6 py-4 text-center">
+                  <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-1">Riaz Hussain</h3>
+                  <p className="font-sans text-xs md:text-sm tracking-[0.18em] uppercase text-teal-500 font-semibold mb-2">Chairman & Visionary</p>
+                  <p className="font-sans text-slate-400 text-xs md:text-sm leading-relaxed max-w-xs mx-auto">
+                    Architect of Winmark’s bold restructure and driving force behind Pakistan’s most resilient food ingredient network.
+                  </p>
+                </div>
+              </motion.div>
             </div>
 
             {/* Right Column - Content */}
-            <div className="md:col-span-3 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-
+            <div className="flex-1 flex flex-col justify-center items-start md:pl-2">
               {/* Eyebrow */}
-              <div className="mb-4">
-                <span className="inline-block text-xs font-bold tracking-[0.2em] uppercase text-sky-400">
+              <div className="mb-2 mt-1">
+                <span className="inline-block text-xs font-bold tracking-[0.2em] uppercase text-sky-400 align-top">
                   2019 – Present
                 </span>
               </div>
-
               {/* Main Heading */}
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-snug">
+              <h3 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
                 A Legacy of Expansion
               </h3>
-
               {/* Body Text */}
-              <p className="text-slate-300 leading-relaxed mb-10 text-base md:text-lg font-light" style={{ lineHeight: '1.8' }}>
+              <p className="text-slate-300 leading-relaxed mb-6 text-base md:text-lg font-light" style={{ lineHeight: '1.8' }}>
                 In 2019, a pivotal leadership transition brought a renewed, aggressive vision to Winmark. Under this new direction, the company underwent a full corporate restructure, officially registering as <strong className="text-white font-medium">Winmark Ingredients Pvt Ltd</strong>. By reorganizing our sales divisions for Direct Industries (B2B), HoReCa, Bakeries, and Traders, we significantly expanded our market footprint — powering Pakistan's food industry forward.
               </p>
-
               {/* Magnetic CTA Button */}
-              <div>
+              <div className="mt-0">
                 <MotionLink
-                  ref={btnRef}
                   to="/history"
-                  onMouseMove={handleMouseMove}
-                  onMouseLeave={handleMouseLeave}
-                  animate={{ x: btnStyle.x, y: btnStyle.y }}
-                  transition={{ type: "spring", stiffness: 200, damping: 15, mass: 0.5 }}
                   className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest text-white relative overflow-hidden group"
                   style={{
                     background: 'linear-gradient(135deg, #1e535e 0%, #0f766e 100%)',
@@ -124,7 +117,6 @@ export function History() {
                   <ArrowRight size={16} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
                 </MotionLink>
               </div>
-
             </div>
           </div>
         </motion.div>

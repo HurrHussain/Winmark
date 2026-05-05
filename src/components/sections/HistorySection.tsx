@@ -62,7 +62,7 @@ export function HistorySection({ chapter, index, springIndex, isActive }: Histor
         className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
       >
         <span 
-          className="text-[12rem] md:text-[20rem] font-black text-white leading-none tracking-tighter"
+          className="text-[12rem] md:text-[20rem] font-black text-white leading-none tracking-tighter font-display"
         >
           {chapter.year}
         </span>
@@ -82,8 +82,7 @@ export function HistorySection({ chapter, index, springIndex, isActive }: Histor
             {chapter.year}
           </span>
           <h2 
-            className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight"
-            style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+            className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight font-display italic"
           >
             {chapter.title}
           </h2>

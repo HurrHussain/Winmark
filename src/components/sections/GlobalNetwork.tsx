@@ -99,7 +99,7 @@ export function GlobalNetwork() {
                 activeTab === 'partners' ? 'text-white' : 'text-slate-600 hover:text-slate-900'
               } ${viewBoth ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              Global Partners
+              Our Partners
               {activeTab === 'partners' && (
                 <motion.div layoutId="activeTabBg" className="absolute inset-0 bg-teal-600 rounded-lg -z-10" />
               )}

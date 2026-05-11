@@ -239,7 +239,7 @@ export function Navbar() {
               <img
                 src={`${import.meta.env.BASE_URL}logo-full.png`}
                 alt="Winmark Ingredients"
-                className="h-9 w-auto object-contain transition-all duration-300"
+                className="h-11 w-auto object-contain transition-all duration-300"
                 style={{
                   filter: isSolid ? 'none' : 'brightness(0) invert(1)',
                 }}

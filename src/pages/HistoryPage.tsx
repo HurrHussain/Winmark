@@ -261,6 +261,7 @@ export function HistoryPage() {
             index={index + 1}
             springIndex={springIndex}
             isActive={currentIndex === index + 1}
+            isMobile={isMobile}
           />
         ))}
 
@@ -269,11 +270,11 @@ export function HistoryPage() {
 
           {/* Cinematic Background with Slow Parallax */}
           <motion.div
-            style={{ y: footerParallaxY }}
+            style={isMobile ? {} : { y: footerParallaxY }}
             initial={{ opacity: 0 }}
-            animate={{ opacity: currentIndex === 5 ? 1 : 0 }}
+            animate={{ opacity: (isMobile || currentIndex === 5) ? 1 : 0 }}
             transition={{ duration: 1.5 }}
-            className="absolute inset-0 w-full h-[120%] -top-[10%] z-0"
+            className={isMobile ? "absolute inset-0 w-full h-full top-0 z-0" : "absolute inset-0 w-full h-[120%] -top-[10%] z-0"}
           >
             <img
               src={`${import.meta.env.BASE_URL}new-bg.jpg`}

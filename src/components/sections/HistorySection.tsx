@@ -18,9 +18,10 @@ interface HistorySectionProps {
   index: number
   springIndex: MotionValue<number>
   isActive: boolean
+  isMobile: boolean
 }
 
-export function HistorySection({ chapter, index, springIndex, isActive }: HistorySectionProps) {
+export function HistorySection({ chapter, index, springIndex, isActive, isMobile }: HistorySectionProps) {
   
   // Calculate relative progress of this specific section (-1 = below, 0 = centered, 1 = above)
   const relativeProgress = useTransform(springIndex, (latest) => latest - index)
@@ -48,14 +49,15 @@ export function HistorySection({ chapter, index, springIndex, isActive }: Histor
           image={chapter.bgImage} 
           alt={chapter.bgImageAlt || chapter.title} 
           relativeProgress={relativeProgress} 
+          isMobile={isMobile}
         />
       </Suspense>
 
       {/* 2. Liquid Ghost Year Text (Behind Content) */}
       <motion.div
-        animate={{ opacity: isActive ? 0.1 : 0 }}
+        animate={isMobile ? { opacity: 0.1, scale: 1, y: 0 } : { opacity: isActive ? 0.1 : 0 }}
         transition={{ duration: 1.0, ease: "easeInOut" }}
-        style={{ 
+        style={isMobile ? {} : { 
           scale: textScale,
           y: textY
         }}
@@ -71,7 +73,10 @@ export function HistorySection({ chapter, index, springIndex, isActive }: Histor
       {/* 3. Main Content Overlay */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
         <motion.div
-          animate={{ 
+          whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
+          viewport={{ once: false, amount: 0.3 }}
+          initial={isMobile ? { opacity: 0, y: 50 } : undefined}
+          animate={isMobile ? undefined : { 
             opacity: isActive ? 1 : 0, 
             y: isActive ? 0 : 50 
           }}

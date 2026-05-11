@@ -9,19 +9,24 @@ interface ScrollContextType {
 const ScrollCtx = createContext<ScrollContextType | null>(null)
 
 export function ScrollProvider({ children }: { children: ReactNode }) {
-  const scrollY = useMotionValue(0)
+  const scrollY = useMotionValue(typeof window !== "undefined" ? window.scrollY : 0)
   const { pathname } = useLocation()
 
-  // Sync MotionValue with page top on route change to prevent "ghost" scroll positions
-  // causing animation jumps (like the FlyingLogo starting in its landed state).
+  // Sync MotionValue with page top on route change ONLY if we are actually at the top
+  // to prevent "ghost" scroll positions causing animation jumps.
   useEffect(() => {
-    scrollY.set(0)
+    // If we're on the homepage, we usually want to start at 0, 
+    // but if it's a refresh, we should respect the browser's position.
+    // The key is to ensure the MotionValue matches the DOM.
+    scrollY.set(window.scrollY)
   }, [pathname, scrollY])
 
   useEffect(() => {
     const onScroll = () => scrollY.set(window.scrollY)
-    // Set initial value
+    
+    // Set initial value in case it changed between mount and effect
     onScroll()
+    
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [scrollY])

@@ -1,9 +1,9 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import type { ReactNode } from 'react';
-import { useRef } from 'react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import React, { type ReactNode, useRef } from 'react';
 
 // ── Hero Parallax ──
 export function HeroParallax({ children, className }: { children: ReactNode; className?: string }) {
+  const shouldReduceMotion = useReducedMotion();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -11,6 +11,10 @@ export function HeroParallax({ children, className }: { children: ReactNode; cla
   });
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+  if (shouldReduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div ref={ref} style={{ y, opacity }} className={className}>
@@ -21,7 +25,7 @@ export function HeroParallax({ children, className }: { children: ReactNode; cla
 
 // ── Split Text Reveal ──
 export function SplitTextReveal({ lines, stagger = 0.1 }: { lines: ReactNode[]; stagger?: number }) {
-  const container = {
+  const container = React.useMemo(() => ({
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -29,16 +33,16 @@ export function SplitTextReveal({ lines, stagger = 0.1 }: { lines: ReactNode[]; 
         staggerChildren: stagger,
       },
     },
-  };
+  }), [stagger]);
 
-  const item = {
+  const item = React.useMemo(() => ({
     hidden: { opacity: 0, y: 30 },
     show: {
       opacity: 1,
       y: 0,
       transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
     },
-  };
+  }), []);
 
   return (
     <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }}>
@@ -106,13 +110,24 @@ export function ClipReveal({ children, direction = 'bottom', className }: { chil
 }
 
 // ── Parallax Section ──
-export function ParallaxSection({ children, speed = 0.2, className }: { children: ReactNode; speed?: number; className?: string }) {
+export function ParallaxSection({ children, className }: { children: ReactNode; className?: string }) {
+  const shouldReduceMotion = useReducedMotion();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+
+  if (shouldReduceMotion) {
+    return (
+      <div className={`overflow-hidden ${className || ''}`}>
+        <div className="h-full w-full">
+          {children}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={ref} className={`overflow-hidden ${className || ''}`}>
@@ -133,70 +148,5 @@ export function SectionLabel({ children, dark = false }: { children: ReactNode; 
         <span className={`h-px w-6 ${dark ? 'bg-teal-400/30' : 'bg-teal-600/30'}`} />
       </span>
     </FadeUp>
-  );
-}
-
-// ── Marquee ──
-export function Marquee({ children, speed = 30, className }: { children: ReactNode; speed?: number; className?: string }) {
-  return (
-    <div className={`overflow-hidden flex w-full ${className || ''}`}>
-      <motion.div
-        className="flex min-w-full shrink-0 gap-4 pr-4"
-        animate={{ x: ["0%", "-100%"] }}
-        transition={{
-          repeat: Infinity,
-          ease: "linear",
-          duration: speed,
-        }}
-      >
-        {children}
-      </motion.div>
-      <motion.div
-        className="flex min-w-full shrink-0 gap-4 pr-4"
-        animate={{ x: ["0%", "-100%"] }}
-        transition={{
-          repeat: Infinity,
-          ease: "linear",
-          duration: speed,
-        }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-}
-
-// ── Stagger Grid ──
-export function StaggerGrid({ children, className, stagger = 0.1 }: { children: ReactNode; className?: string; stagger?: number }) {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: stagger,
-      },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" as const },
-    },
-  };
-
-  // Convert children to array to map over them
-  const childArray = Array.isArray(children) ? children : [children];
-
-  return (
-    <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className={className}>
-      {childArray.map((child, i) => (
-        <motion.div key={i} variants={item}>
-          {child}
-        </motion.div>
-      ))}
-    </motion.div>
   );
 }

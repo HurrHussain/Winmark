@@ -2,19 +2,19 @@ import { motion } from "framer-motion"
 
 export function TeamPage() {
   return (
-    <div className="bg-[#0b1120] min-h-screen text-white pt-24">
+    <div className="bg-slate-950 min-h-screen text-white pt-24">
       {/* Hero Section */}
       <section className="relative py-24 lg:py-32 overflow-hidden">
         {/* Ambient Glow */}
-        <div 
+        <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background: "radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.05) 0%, transparent 70%)"
           }}
         />
-        
+
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -49,12 +49,22 @@ export function TeamPage() {
             <div className="w-full bg-gradient-to-br from-slate-900/80 to-slate-800 border border-slate-800 rounded-2xl p-6 md:p-8 mb-8">
               <div className="md:flex md:items-center md:gap-8">
                 <div className="md:flex-shrink-0 w-full md:w-1/3 mb-4 md:mb-0">
-                  <div className="w-full h-56 md:h-64 bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center">
+                  <div className="w-full h-62 md:h-100 bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center">
                     <img
-                      src="riaz.png"
+                      src="/riaz.png"
                       alt="Riaz Hussain"
                       className="w-full h-full object-cover"
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'riaz.png'; }}
+                      onError={(e) => {
+                        const target = e.currentTarget as HTMLImageElement;
+                        if (target.dataset.failed) return;
+                        target.dataset.failed = 'true';
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.classList.add('bg-slate-800', 'text-slate-400', 'font-bold', 'text-4xl', 'font-serif');
+                          parent.innerHTML = 'RH';
+                        }
+                      }}
                     />
                   </div>
                 </div>
@@ -90,10 +100,21 @@ export function TeamPage() {
                     >
                       <div className="w-full h-50 bg-slate-800 rounded-md mb-4 overflow-hidden flex items-center justify-center">
                         <img
-                          src={`/Winmark/team/${p.name.toLowerCase().replace(/\s+/g, '-')}.png`}
+                          src={`/img-team/${p.name.toLowerCase().replace(/\s+/g, '-')}.png`}
                           alt={p.name}
                           className="w-full h-full object-cover"
-                          onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/team/placeholder.png'; }}
+                          onError={(e) => {
+                            const target = e.currentTarget as HTMLImageElement;
+                            if (target.dataset.failed) return;
+                            target.dataset.failed = 'true';
+                            target.style.display = 'none';
+                            const parent = target.parentElement;
+                            if (parent) {
+                              parent.classList.add('bg-slate-800', 'text-slate-400', 'font-bold', 'text-3xl', 'font-serif');
+                              const initials = p.name.split(' ').map(n => n[0]).join('');
+                              parent.innerHTML = initials;
+                            }
+                          }}
                         />
                       </div>
                       <h5 className="font-serif text-slate-200 font-bold mb-1">{p.name}</h5>

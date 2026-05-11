@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react"
+import { lazy, Suspense, useEffect, useState } from "react"
 import { HashRouter as Router, Routes, Route, useLocation, Link } from "react-router-dom"
 import { motion, useTransform } from "framer-motion"
 import { Footer } from "@/components/sections/Footer"
@@ -51,15 +51,27 @@ function FlyingLogo() {
   const isHomePage = location.pathname === "/"
   const isHidden = useSmartHide()
 
-  // CORRECTED MATH:
-  //   y: 270 → 6px  — lowered starting position so it sits cleanly inside the hero card
-  //   scale: 1.9 → 0.75 — larger in hero, but smaller to fit perfectly inside the 96px tall navbar
-  // At 1.9x: logo height = 112*1.9 = 212px, bottom = 270+212 = 482px
-  // Card content starts after spacer ≈ 456px — slightly lower, with no overlap
-  const logoY = useTransform(scrollY, [0, 550], [250, 6])
-  const logoScale = useTransform(scrollY, [0, 450], [1.9, 0.75])
+  // On mobile, the FlyingLogo is hidden entirely.
+  // The Navbar's own mobile logo handles branding at all scroll positions.
+  // This prevents the "two logos" clash on small screens.
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  )
 
-  // ── SUBPAGES: static logo locked to its navbar resting position ──
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Scroll-driven flight values (desktop only)
+  const logoY = useTransform(scrollY, [0, 550], [240, 6])
+  const logoScale = useTransform(scrollY, [0, 450], [1.8, 0.75])
+
+  // ── MOBILE: don't render the FlyingLogo at all ──
+  if (isMobile) return null
+
+  // ── SUBPAGES (desktop): static logo locked to its navbar resting position ──
   if (!isHomePage) {
     return (
       <motion.div
@@ -74,21 +86,18 @@ function FlyingLogo() {
           pointerEvents: "none",
         }}
       >
-        <Link to="/" style={{ pointerEvents: "auto" }}>
+        <Link to="/" style={{ pointerEvents: "auto" }} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 rounded-sm">
           <img
-            src="./logo-full.png"
+            src="/logo-full.png"
             alt="Winmark Ingredients — Home"
             className="h-28 w-auto object-contain"
           />
         </Link>
-        </motion.div>
+      </motion.div>
     )
   }
 
-  // ── HOMEPAGE: full scroll-driven flight ──
-  // key="homepage-logo" forces a complete remount (resetting Framer Motion's
-  // internal state) whenever we navigate back to the homepage, preventing
-  // the logo from inheriting the subpage's animated position.
+  // ── HOMEPAGE (desktop): full scroll-driven flight ──
   return (
     <motion.div
       key="homepage-logo"
@@ -99,7 +108,7 @@ function FlyingLogo() {
       }}
       className="fixed top-0 left-0 w-full z-50 flex justify-center origin-top pointer-events-none"
     >
-      <Link to="/" style={{ pointerEvents: "auto" }}>
+      <Link to="/" style={{ pointerEvents: "auto" }} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 rounded-sm inline-block">
         <img
           src={`${import.meta.env.BASE_URL}logo-full.png`}
           alt="Winmark Ingredients — Home"

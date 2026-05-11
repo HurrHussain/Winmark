@@ -6,6 +6,8 @@
   --color-winmark: var(--winmark);
   --color-winmark-foreground: var(--winmark-foreground);
   --color-winmark-light: var(--winmark-light);
+  --color-winmark-dark: var(--winmark-dark);
+  --color-midnight-slate: var(--midnight-slate);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -77,6 +79,7 @@
   --winmark: #1e535e;
   --winmark-foreground: #ffffff;
   --winmark-light: #e8f4f6;
+  --winmark-dark: #163f47;
   --midnight-slate: #0b1120;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -151,11 +154,56 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+    max-width: 100vw;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
   }
+
+  img, video, svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  a, button, input, textarea, select, [role="button"], [tabindex]:not([tabindex="-1"]) {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  /* Ensure all interactive elements have touch-friendly sizing on mobile */
+  @media (max-width: 768px) {
+    a, button, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    input, textarea, select {
+      font-size: 16px; /* Prevents iOS auto-zoom */
+    }
+  }
+}
+
+/* Fluid container utility used in About page */
+.container-enterprise {
+  width: 100%;
+  max-width: 80rem;
+}
+
+/* Paper background for About sections */
+.bg-paper {
+  background-color: #fafafa;
 }
 
 @keyframes ticker {

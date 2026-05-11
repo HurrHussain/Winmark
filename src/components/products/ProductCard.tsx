@@ -43,8 +43,8 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
         </p>
       </div>
 
-      {/* Hover Reveal — Actions Only */}
-      <div className="absolute inset-0 bg-[#0f172a]/95 backdrop-blur-sm flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
+      {/* Hover/Focus Reveal — Actions (works on both hover and tap/focus) */}
+      <div className="absolute inset-0 bg-[#0f172a]/95 backdrop-blur-sm flex flex-col items-center justify-center p-6 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0 group-focus-within:translate-y-0">
           <button
             onClick={(e) => {
               e.stopPropagation();

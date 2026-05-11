@@ -98,20 +98,20 @@ export function ProductsPage() {
 
 
   return (
-    <div className="min-h-screen bg-[var(--midnight-slate)] pt-28 pb-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--midnight-slate)] pt-20 sm:pt-24 md:pt-28 pb-20 px-3 sm:px-4 md:px-6 lg:px-8">
       <div className="max-w-[1400px] mx-auto">
 
         {/* Page Header */}
         <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">Industrial Products</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">Industrial Products</h1>
             <p className="text-slate-400 text-lg">Browse our complete catalogue of B2B ingredients.</p>
           </div>
 
           <button
             ref={triggerRef}
             onClick={() => setMobileFiltersOpen(true)}
-            className="md:hidden flex items-center gap-2 bg-[#1e293b] text-white px-4 py-2 rounded-lg border border-slate-700 w-max"
+            className="md:hidden flex items-center gap-2 bg-[#1e293b] text-white px-4 py-3 rounded-lg border border-slate-700 w-max min-h-[48px]"
           >
             <Filter size={18} /> Filters
           </button>

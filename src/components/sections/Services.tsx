@@ -7,19 +7,19 @@ const services = [
     icon: Warehouse,
     title: "Bulk Warehousing",
     description:
-      "Strategic high-volume industrial warehousing across Karachi and Lahore. Climate-controlled storage for bulk commodities and specialty ingredients with full inventory tracking.",
+      "Strategic high-volume industrial warehousing across Karachi and Lahore. Climate-controlled storage for bulk commodities and specialty ingredients.",
   },
   {
     icon: Truck,
     title: "Nationwide Distribution",
     description:
-      "Agile, reliable supply chain network reaching major food manufacturers, confectioneries, and bakeries across all major Pakistani cities within guaranteed lead times.",
+      "Agile, reliable supply chain network reaching major food manufacturers, confectioneries, and bakeries across all major Pakistani cities.",
   },
   {
     icon: FlaskConical,
     title: "Technical Support",
     description:
-      "Expert ingredient specification matching and R&D assistance. Our technical team helps you find the precise grade, functionality, and quantity your formulation demands.",
+      "Ingredient specification matching and R&D assistance. Our technical team helps you by providing precise technical oversight and operational efficiency.",
   },
   {
     icon: Target,
@@ -45,15 +45,14 @@ export function Services() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-px w-8 bg-[#1e535e]" />
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#1e535e]">
+            <div className="h-px w-8 bg-winmark" />
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-winmark">
               What We Do
             </span>
-            <div className="h-px w-8 bg-[#1e535e]" />
+            <div className="h-px w-8 bg-winmark" />
           </div>
           <h2
-            className="text-4xl md:text-5xl font-bold tracking-tight"
-            style={{ color: "#1e535e" }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-winmark"
           >
             Our Services
           </h2>
@@ -79,17 +78,15 @@ export function Services() {
               >
                 {/* Icon */}
                 <div
-                  className="w-12 h-12 rounded-lg flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-[#1e535e]"
-                  style={{ backgroundColor: "#e8f4f6" }}
+                  className="w-12 h-12 rounded-lg flex items-center justify-center mb-5 transition-colors duration-300 group-hover:bg-winmark bg-winmark-light"
                 >
                   <Icon
-                    className="w-5 h-5 transition-colors duration-300 group-hover:text-white"
-                    style={{ color: "#1e535e" }}
+                    className="w-5 h-5 transition-colors duration-300 group-hover:text-white text-winmark"
                   />
                 </div>
 
                 {/* Title */}
-                <h3 className="text-base font-bold mb-2.5" style={{ color: "#1e535e" }}>
+                <h3 className="text-base font-bold mb-2.5 text-winmark">
                   {service.title}
                 </h3>
 
@@ -98,8 +95,7 @@ export function Services() {
 
                 {/* Bottom accent */}
                 <div
-                  className="mt-6 h-0.5 w-8 rounded-full transition-all duration-300 group-hover:w-full"
-                  style={{ backgroundColor: "#1e535e", opacity: 0.25 }}
+                  className="mt-6 h-0.5 w-8 rounded-full transition-all duration-300 group-hover:w-full bg-winmark opacity-25"
                 />
               </motion.div>
             )

@@ -16,7 +16,12 @@ module.exports = {
         muted: 'var(--color-muted)',
         accent: 'var(--color-accent)',
         destructive: 'var(--color-destructive)',
-        sidebar: 'var(--color-sidebar)'
+        sidebar: 'var(--color-sidebar)',
+        winmark: {
+          DEFAULT: '#1e535e',
+          light: '#e8f4f6',
+          dark: '#163f47'
+        }
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],

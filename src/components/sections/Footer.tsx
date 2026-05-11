@@ -34,15 +34,15 @@ export function Footer() {
       className="text-slate-200 relative bg-[var(--midnight-slate)]"
     >
       {/* Main footer grid */}
-      <div className="py-24 px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+      <div className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16">
           {/* Brand column */}
           <div className="lg:col-span-1">
             <div className="flex flex-col items-start gap-4 mb-8">
               <img
                 src={`${import.meta.env.BASE_URL}logo-full.png`}
                 alt="Winmark Logo"
-                className="h-20 md:h-26 w-auto object-contain object-left"
+                className="h-16 sm:h-20 md:h-26 w-auto object-contain object-left"
               />
               <span className="text-[10px] font-bold tracking-[0.4em] text-white 500 uppercase">Winmark Ingredients Pvt Ltd</span>
             </div>
@@ -122,12 +122,12 @@ export function Footer() {
       </div>
 
       {/* Thin Horizontal Rule */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="h-px w-full bg-white opacity-10" />
       </div>
 
       {/* Bottom bar */}
-      <div className="py-10 px-6 lg:px-8">
+      <div className="py-8 sm:py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">
             © {CURRENT_YEAR} Winmark Ingredients Pvt. Ltd.

@@ -13,21 +13,21 @@ import {
 const principlesItems = [
   {
     icon: <Target size={20} />,
-    title: 'Precision First',
-    description: 'Every formulation and delivery target is engineered for consistency at industrial scale.',
-    proof: 'Controlled specs and predictable output',
+    title: 'Consistent Specifications',
+    description: 'We provide food-grade ingredients that align with standard industry parameters and client requirements',
+    proof: 'RELIABLE QUALITY CONTROL',
   },
   {
     icon: <ShieldCheck size={20} />,
-    title: 'Compliance by Design',
-    description: 'Quality checks are embedded into sourcing, handling, and fulfillment from day one.',
-    proof: 'Tested, documented, and audit-ready',
+    title: 'Verified Sourcing',
+    description: 'We work closely with our network of suppliers to provide the necessary quality certificates and documentation for your records..',
+    proof: 'DOCUMENTED SUPPLY',
   },
   {
     icon: <Zap size={20} />,
-    title: 'Execution Speed',
-    description: 'We move fast without sacrificing quality, so production lines stay active and stable.',
-    proof: 'Nationwide coverage with rapid response',
+    title: 'Order Fulfillment',
+    description: 'Utilizing our warehousing facilities in Karachi and Lahore, we work to support your ongoing production schedules.',
+    proof: 'Nationwide coverage',
   },
   {
     icon: <Heart size={20} />,
@@ -37,15 +37,15 @@ const principlesItems = [
   },
   {
     icon: <Lightbulb size={20} />,
-    title: 'Practical Innovation',
-    description: 'We adopt technology that improves planning, procurement, and supply reliability.',
-    proof: 'Digital workflows that reduce risk',
+    title: 'Supply Management',
+    description: 'We monitor market trends and manage local inventory levels to help mitigate material shortages.',
+    proof: 'NVENTORY PLANNING',
   },
   {
     icon: <Globe2 size={20} />,
-    title: 'Global Sourcing Intelligence',
-    description: 'We connect local manufacturing demand with dependable international supply networks.',
-    proof: 'Premium inputs from vetted global partners',
+    title: 'International Sourcing',
+    description: 'We procure a wide range of ingredients from established international manufacturers to meet local demand.',
+    proof: 'GLOBAL NETWORK',
   },
 ];
 
@@ -60,57 +60,57 @@ export default function About() {
   return (
     <>
       {/* ── HERO ── */}
-<section className="relative min-h-[100vh] flex items-center overflow-hidden bg-slate-950">
-  
-  {/* 1. THE IMAGE LAYER */}
-  <div className="absolute inset-0 z-0">
-    <img
-      // Replace the URL below with your actual image path when ready
-      src="download.jpg"
-      alt="Winmark Industrial Heritage"
-      className="w-full h-full object-cover opacity-60 grayscale-[0.6] brightness-[0.9]"
-    />
-  </div>
+      <section className="relative min-h-[80vh] md:min-h-[100vh] flex items-center overflow-hidden bg-slate-950">
 
-  {/* 2. THE OVERLAY LAYER (Ensures Text Contrast) */}
-  <div className="absolute inset-0 z-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent" />
-  <div className="absolute inset-0 z-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+        {/* 1. THE IMAGE LAYER */}
+        <div className="absolute inset-0 z-0">
+          <img
+            // Replace the URL below with your actual image path when ready
+            src="/download.jpg"
+            alt="Winmark Industrial Heritage"
+            className="w-full h-full object-cover opacity-60 grayscale-[0.6] brightness-[0.9]"
+          />
+        </div>
 
-  {/* 3. THE CONTENT LAYER */}
-  <HeroParallax className="container-enterprise mx-auto px-8 lg:px-20 relative z-10 pt-39 pb-20 w-full">
-    <SplitTextReveal
-      lines={[
-        <span key="l1" className="font-sans text-xs tracking-[0.3em] uppercase text-teal-400 block mb-6 drop-shadow-md">
-          About Winmark Ingredients
-        </span>,
-        <span key="l2" className="font-serif text-5xl md:text-6xl lg:text-[5.5rem] font-bold text-white leading-[1.02] block drop-shadow-xl">
-          With you at every
-        </span>,
-        <span key="l3" className="font-serif text-5xl md:text-6xl lg:text-[5.5rem] font-bold text-teal-400 leading-[1.02] block drop-shadow-xl">
-          stage of supply.
-        </span>,
-      ]}
-      stagger={0.12}
-    />
-    <TextReveal delay={0.5}>
-      <p className="font-sans text-lg md:text-xl text-slate-200 max-w-xl leading-relaxed mt-8 drop-shadow-md">
-        Securing Pakistan's industrial food supply chain through 25 years of integrity, precision, and decisive leadership.
-      </p>
-    </TextReveal>
-  </HeroParallax>
-</section>
+        {/* 2. THE OVERLAY LAYER (Ensures Text Contrast) */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+
+        {/* 3. THE CONTENT LAYER */}
+        <HeroParallax className="container-enterprise mx-auto px-5 sm:px-8 lg:px-20 relative z-10 pt-24 sm:pt-32 md:pt-39 pb-12 sm:pb-20 w-full">
+          <SplitTextReveal
+            lines={[
+              <span key="l1" className="font-sans text-xs tracking-[0.3em] uppercase text-teal-400 block mb-6 drop-shadow-md">
+                About Winmark Ingredients
+              </span>,
+              <span key="l2" className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[5.5rem] font-bold text-white leading-[1.02] block drop-shadow-xl">
+                With you at every
+              </span>,
+              <span key="l3" className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[5.5rem] font-bold text-teal-400 leading-[1.02] block drop-shadow-xl">
+                stage of supply.
+              </span>,
+            ]}
+            stagger={0.12}
+          />
+          <TextReveal delay={0.5}>
+            <p className="font-sans text-base sm:text-lg md:text-xl text-slate-200 max-w-xl leading-relaxed mt-6 sm:mt-8 drop-shadow-md">
+              Securing Pakistan's industrial food supply chain through 25 years of integrity, precision, and decisive leadership.
+            </p>
+          </TextReveal>
+        </HeroParallax>
+      </section>
 
       {/* ── INTRO STATEMENT ── */}
-      <section className="bg-paper py-24 md:py-36">
-        <div className="container-enterprise mx-auto px-8 lg:px-20">
+      <section className="bg-paper py-16 sm:py-24 md:py-36">
+        <div className="container-enterprise mx-auto px-5 sm:px-8 lg:px-20">
           <SectionLabel>Who We Are</SectionLabel>
           <SplitTextReveal
             lines={[
-              <p key="h" className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-slate-700 leading-[1.12] max-w-4xl mt-6">
-                A premier sourcing infrastructure 
+              <p key="h" className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-700 leading-[1.12] max-w-4xl mt-6">
+                 A sourcing infrastructure
               </p>,
-              <p key="h2" className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-teal-500 leading-[1.12] max-w-4xl">
-                built for absolute industrial scale.
+              <p key="h2" className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-teal-500 leading-[1.12] max-w-4xl">
+                built for industrial scale.
               </p>,
             ]}
             stagger={0.15}
@@ -124,23 +124,23 @@ export default function About() {
       </section>
 
       {/* ── PARALLAX IMAGE ── */}
-      <ClipReveal direction="left" className="h-[55vh] bg-slate-200">
-        <ParallaxSection speed={0.25}>
+      <ClipReveal direction="left" className="h-[35vh] sm:h-[45vh] md:h-[55vh] bg-slate-200">
+        <ParallaxSection>
           <img
-            src="22.jpg"
+            src="/22.jpg"
             alt="Winmark Industrial Infrastructure"
-            className="w-full h-[55vh] object-cover"
+            className="w-full h-[35vh] sm:h-[45vh] md:h-[55vh] object-cover"
           />
         </ParallaxSection>
       </ClipReveal>
 
       {/* ── OPERATING PRINCIPLES ── */}
-      <section className="bg-paper py-24 md:py-36 border-y border-slate-200">
-        <div className="container-enterprise mx-auto px-6 lg:px-20">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+      <section className="bg-paper py-16 sm:py-24 md:py-36 border-y border-slate-200">
+        <div className="container-enterprise mx-auto px-4 sm:px-6 lg:px-20">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             <FadeUp className="lg:col-span-4 lg:sticky lg:top-28">
               <SectionLabel>Operating Principles</SectionLabel>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-slate-800 mt-5 leading-tight">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800 mt-5 leading-tight">
                 Not just values on paper.
               </h2>
               <p className="font-sans text-slate-500 mt-5 leading-relaxed">
@@ -180,14 +180,14 @@ export default function About() {
 
       {/* ── OUR STORY — DARK SECTION ── */}
       <ClipReveal direction="bottom">
-        <section className="bg-slate-800 py-24 md:py-36">
-          <div className="container-enterprise mx-auto px-6 lg:px-20">
+        <section className="bg-slate-800 py-16 sm:py-24 md:py-36">
+          <div className="container-enterprise mx-auto px-4 sm:px-6 lg:px-20">
             <SectionLabel dark>Our Story</SectionLabel>
             <div className="grid lg:grid-cols-2 gap-16 items-center mt-6">
               <div>
                 <TextReveal delay={0.1}>
-                  <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
-                    A Legacy of Expansion under <br/><span className="text-teal-400">Riaz Hussain</span>
+                  <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
+                    A Legacy of Expansion under <br /><span className="text-teal-400">Riaz Hussain</span>
                   </h2>
                 </TextReveal>
                 <FadeUp delay={0.2}>
@@ -202,7 +202,7 @@ export default function About() {
                 </FadeUp>
                 <FadeUp delay={0.3}>
                   <p className="font-sans text-slate-300 leading-relaxed">
-                    Today, we bridge decades of physical logistics expertise with next-generation supply chain technology, powering Pakistan's food industry forward.
+                    Riaz's leadership has been marked by a commitment to operational excellence, strategic expansion, and a relentless focus on customer-centric service. His vision continues to drive Winmark's growth and solidify its position as a trusted partner in Pakistan's food manufacturing landscape.
                   </p>
                 </FadeUp>
               </div>
@@ -212,7 +212,7 @@ export default function About() {
                     {[
                       { value: '2001', label: 'Year Founded' },
                       { value: '120+', label: 'Products' },
-                      { value: '1', label: 'National Network' },
+                      { value: '10+', label: 'Clients' },
                       { value: '25+', label: 'Years of Trust' },
                     ].map((stat) => (
                       <div key={stat.label} className="border-l-2 border-teal-500 pl-4">
@@ -229,11 +229,11 @@ export default function About() {
       </ClipReveal>
 
       {/* ── TIMELINE ── */}
-      <section className="bg-slate-800 py-10 md:py-5">
-        <div className="container-enterprise mx-auto px-6 lg:px-20">
+      <section className="bg-slate-800 py-8 sm:py-10 md:py-5">
+        <div className="container-enterprise mx-auto px-4 sm:px-6 lg:px-20">
           <SectionLabel>Our Journey</SectionLabel>
           <TextReveal delay={0.1}>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mt-4 mb-16">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-white mt-4 mb-10 md:mb-16">
               Milestones of Growth
             </h2>
           </TextReveal>
@@ -244,9 +244,8 @@ export default function About() {
               {timelineItems.map((item, i) => (
                 <FadeUp key={item.year} delay={i * 0.08}>
                   <div
-                    className={`relative flex items-start gap-8 ${
-                      i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                    }`}
+                    className={`relative flex items-start gap-8 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                      }`}
                   >
                     <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                       <div className="pl-12 md:pl-0">
@@ -265,25 +264,14 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── SECOND PARALLAX IMAGE ──
-      <ClipReveal direction="right" className="h-[40vh] bg-slate-200">
-        <ParallaxSection speed={0.2}>
-          <img
-            src="https://images.pexels.com/photos/25770006/pexels-photo-25770006.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1"
-            alt="Winmark Logistics and Distribution"
-            className="w-full h-[40vh] object-cover"
-          />
-        </ParallaxSection>
-      </ClipReveal> */}
-
       {/* ── CTA ── */}
       <ClipReveal direction="bottom">
         <section className="bg-teal-500">
-          <div className="container-enterprise mx-auto px-6 lg:px-20 py-16">
+          <div className="container-enterprise mx-auto px-4 sm:px-6 lg:px-20 py-12 md:py-16">
             <FadeUp>
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div>
-                  <h2 className="font-serif text-2xl md:text-3xl font-bold text-white">
+                  <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-white">
                     Ready to scale your production?
                   </h2>
                   <p className="font-sans text-teal-100 mt-2">
@@ -292,7 +280,7 @@ export default function About() {
                 </div>
                 <Link
                   to="/contact"
-                  className="bg-white text-teal-500 px-8 py-3 font-sans text-sm font-semibold tracking-wider uppercase border-sharp hover:bg-teal-50 transition-colors shrink-0 inline-flex items-center gap-2"
+                  className="bg-white text-teal-500 px-8 py-3 font-sans text-sm font-semibold tracking-wider uppercase border-sharp hover:bg-teal-50 transition-colors shrink-0 inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-500"
                 >
                   Partner With Us <ArrowRight size={16} />
                 </Link>

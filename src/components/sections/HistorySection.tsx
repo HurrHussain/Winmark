@@ -34,7 +34,7 @@ export function HistorySection({ chapter, index, springIndex, isActive }: Histor
   return (
     <section 
       className={cn(
-        "relative h-screen w-full flex items-center overflow-hidden flex-shrink-0",
+        "relative h-[100dvh] w-full flex items-center overflow-hidden flex-shrink-0",
         "bg-[var(--midnight-slate)]" 
       )}
       style={{
@@ -62,32 +62,32 @@ export function HistorySection({ chapter, index, springIndex, isActive }: Histor
         className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
       >
         <span 
-          className="text-[12rem] md:text-[20rem] font-black text-white leading-none tracking-tighter font-display"
+          className="text-[8rem] sm:text-[12rem] md:text-[20rem] font-black text-white leading-none tracking-tighter font-display"
         >
           {chapter.year}
         </span>
       </motion.div>
 
       {/* 3. Main Content Overlay */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
         <motion.div
           animate={{ 
             opacity: isActive ? 1 : 0, 
             y: isActive ? 0 : 50 
           }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
-          className="max-w-2xl bg-[#0b1120]/60 backdrop-blur-md border border-white/10 p-8 md:p-12 rounded-3xl"
+          className="max-w-2xl bg-[#0b1120]/60 backdrop-blur-md border border-white/10 p-5 sm:p-8 md:p-12 rounded-2xl md:rounded-3xl"
         >
           <span className="text-teal-400 font-bold text-xs uppercase tracking-widest mb-4 block">
             {chapter.year}
           </span>
           <h2 
-            className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight font-display italic"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight font-display italic"
           >
             {chapter.title}
           </h2>
           <div className="w-16 h-px bg-teal-500/50 mb-6" />
-          <p className="text-slate-300 text-lg md:text-xl font-light leading-relaxed">
+          <p className="text-slate-300 text-base sm:text-lg md:text-xl font-light leading-relaxed">
             {chapter.description}
           </p>
         </motion.div>

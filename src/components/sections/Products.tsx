@@ -5,31 +5,31 @@ import { Link } from "react-router-dom"
 const products = [
   {
     title: "Cocoa",
-    subtitle: "Dutch-Process Powders, Cocoa Butter & Mass Solutions",
+    subtitle: "Cocoa Powders, Cocoa Butter & Mass Solutions",
     description:
-      "Premium Dutch-process cocoa powders, cocoa butter, and compound chocolate blocks for confectionery and bakery applications.",
-    image: "./product-cocoa.webp",
+      "Cocoa powders, cocoa butter, and compound chocolate blocks for confectionery and bakery applications.",
+    image: "/product-cocoa.webp",
   },
   {
-    title: "Milk Powder",
-    subtitle: "High-Grade SMP, FCMP & Premium Desi Ghee",
+    title: "Dairy",
+    subtitle: "SMP, FCMP & Desi Ghee",
     description:
-      "High-grade skimmed milk powder (SMP) and full cream milk powder (FCMP) sourced from certified dairy processors.",
-    image: "./product-milk.webp",
+      "Skimmed milk powder (SMP), Desi Ghee and full cream milk powder (FCMP) sourced from certified dairy processors.",
+    image: "/product-milk.webp",
   },
   {
     title: "Fats",
-    subtitle: "Industrial Specialty Fats, CBS & Bakery Shortening",
+    subtitle: "Specialty Fats, CBS & Bakery Shortening",
     description:
-      "IFFCO-grade specialty fats, desi ghee, vegetable shortening, and fractionated palm olein for industrial baking.",
-    image: "./product-oils.webp",
+      "Specialty fats, vegetable shortening, and fractionated palm olein for industrial food production and baking.",
+    image: "/product-oils.webp",
   },
   {
     title: "Emulsifiers",
     subtitle: "Functional Stabilizers, DATEM & Lecithin Solutions",
     description:
       "Functional stabilizers and emulsifiers to optimize texture, shelf life, and taste in beverage formulations.",
-    image: "./product-emulsifiers.webp",
+    image: "/product-emulsifiers.webp",
   },
 ]
 
@@ -55,7 +55,7 @@ export function Products() {
             </span>
             <div className="h-px w-8 bg-[#1e535e]" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
             Our Products
           </h2>
           <p className="mt-4 text-slate-500 max-w-xl mx-auto text-base leading-relaxed">
@@ -96,8 +96,8 @@ export function Products() {
                   {product.subtitle}
                 </p>
 
-                {/* Description — slides up on hover */}
-                <div className="overflow-hidden max-h-0 opacity-0 group-hover:max-h-24 group-hover:opacity-100 transition-all duration-400 ease-out mt-3">
+                {/* Description — visible on mobile, slides up on hover for desktop */}
+                <div className="overflow-hidden max-h-24 opacity-100 md:max-h-0 md:opacity-0 md:group-hover:max-h-24 md:group-hover:opacity-100 transition-all duration-400 ease-out mt-3">
                   <p className="text-white/80 text-sm leading-relaxed">
                     {product.description}
                   </p>
@@ -117,7 +117,7 @@ export function Products() {
         >
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 shadow-lg hover:shadow-teal-600/20 group"
+            className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 md:py-4 px-8 md:px-10 rounded-full transition-all duration-300 shadow-lg hover:shadow-teal-600/20 group w-full sm:w-auto justify-center"
           >
             <span>Explore Full Catalog</span>
             <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>

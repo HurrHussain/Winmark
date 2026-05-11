@@ -32,12 +32,19 @@ export function FloatingInquiryButton() {
     try {
       if (items.length === 0) return
 
+      const sanitizeExcelCell = (value: string) => {
+        if (value && /^[=+\-@]/.test(value)) {
+          return "'" + value;
+        }
+        return value;
+      };
+
       // Map items to get category from productsData
       const excelData = items.map(itemName => {
         const product = productsData.find(p => p.name === itemName)
         return {
-          "Item Name": itemName,
-          "Category": product ? product.category : "Unknown",
+          "Item Name": sanitizeExcelCell(itemName),
+          "Category": sanitizeExcelCell(product ? product.category : "Unknown"),
           "Inquiry Date": new Date().toLocaleDateString()
         }
       })
@@ -78,17 +85,17 @@ export function FloatingInquiryButton() {
           animate={{ opacity: 1, scale: 1, x: 0 }}
           exit={{ opacity: 0, scale: 0.8, x: 40 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          className="fixed right-6 top-1/2 -translate-y-1/2 z-[60] flex flex-col items-end gap-3"
+          className="fixed right-3 sm:right-6 bottom-20 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-[60] flex flex-col items-end gap-2 sm:gap-3 max-w-[calc(100vw-1.5rem)] sm:max-w-none"
         >
           {/* Item pills — mini list */}
-          <div className="bg-[#0f172a] border border-slate-700 rounded-2xl p-4 max-h-[300px] overflow-y-auto shadow-2xl w-64">
+          <div className="bg-[#0f172a] border border-slate-700 rounded-2xl p-3 sm:p-4 max-h-[200px] sm:max-h-[300px] overflow-y-auto shadow-2xl w-56 sm:w-64">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
                 Inquiry List
               </span>
               <button
                 onClick={clearItems}
-                className="text-[10px] font-bold uppercase tracking-wider text-red-400 hover:text-red-300 transition-colors"
+                className="text-[10px] font-bold uppercase tracking-wider text-red-400 hover:text-red-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 rounded-sm"
               >
                 Clear All
               </button>
@@ -106,7 +113,7 @@ export function FloatingInquiryButton() {
                     onClick={() => removeItem(item)}
                     aria-label={`Remove ${item} from inquiry list`}
                     title={`Remove ${item}`}
-                    className="text-slate-500 hover:text-red-400 transition-colors shrink-0"
+                    className="text-slate-500 hover:text-red-400 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 rounded-sm"
                   >
                     <X size={12} />
                   </button>
@@ -121,7 +128,7 @@ export function FloatingInquiryButton() {
               onClick={handleEnquire}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-3 bg-teal-600 hover:bg-teal-500 text-white font-black uppercase text-xs tracking-widest px-8 py-4 rounded-full shadow-2xl shadow-teal-900/40 transition-colors justify-center w-full"
+              className="flex items-center gap-2 sm:gap-3 bg-teal-600 hover:bg-teal-500 text-white font-black uppercase text-[10px] sm:text-xs tracking-widest px-4 sm:px-8 py-3 sm:py-4 rounded-full shadow-2xl shadow-teal-900/40 transition-colors justify-center w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             >
               <ShoppingCart size={16} />
               Enquire
@@ -139,7 +146,7 @@ export function FloatingInquiryButton() {
               whileTap={count > 0 ? { scale: 0.95 } : {}}
               title={count === 0 ? "Add items to generate a custom list." : "Download Inquiry as Excel"}
               className={cn(
-                "flex items-center gap-2 font-bold uppercase text-[10px] tracking-widest px-4 py-3 rounded-full transition-colors justify-center w-full border",
+                "flex items-center gap-2 font-bold uppercase text-[10px] tracking-widest px-4 py-3 rounded-full transition-colors justify-center w-full border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900",
                 count > 0 
                   ? "bg-[#1e293b] text-teal-400 border-teal-500/50 hover:bg-slate-800 hover:border-teal-400 cursor-pointer shadow-lg" 
                   : "bg-slate-800 text-slate-500 border-slate-700 cursor-not-allowed"

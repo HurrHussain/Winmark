@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { Link } from "react-router-dom"
 import { ArrowRight } from "lucide-react"
@@ -24,13 +24,13 @@ export function History() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-px w-8 bg-[#1e535e]" />
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#4a9aaa]">
+            <div className="h-px w-8 bg-winmark" />
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-teal-400">
               Our Story
             </span>
-            <div className="h-px w-8 bg-[#1e535e]" />
+            <div className="h-px w-8 bg-winmark" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
             The New Era
           </h2>
           <p className="mt-4 text-slate-400 max-w-xl mx-auto text-base leading-relaxed">
@@ -44,21 +44,21 @@ export function History() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-5xl mx-auto bg-[#0b1120] border border-slate-900 rounded-2xl overflow-hidden shadow-2xl relative"
+          className="max-w-5xl mx-auto bg-midnight-slate border border-slate-900 rounded-2xl overflow-hidden shadow-2xl relative"
         >
           {/* Subtle glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1e535e]/10 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-winmark/10 to-transparent pointer-events-none" />
 
-          <div className="md:flex items-center gap-12 md:gap-16 relative z-10">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 relative z-10 p-5 sm:p-6 md:p-0">
             {/* Left Column - Chairman Card */}
-            <div className="flex-shrink-0 flex items-start md:items-center w-full md:w-auto justify-center">
+            <div className="flex-shrink-0 flex items-start md:items-center w-full md:w-auto justify-center mb-6 md:mb-0">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
-                className="w-48 md:w-64 bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col"
-                style={{ minWidth: '12rem' }}
+                className="w-40 sm:w-48 md:w-64 bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col"
+                style={{ minWidth: '10rem' }}
               >
                 <div className="w-full aspect-[3/4] bg-slate-900 overflow-hidden">
                   <img
@@ -66,13 +66,13 @@ export function History() {
                     alt="Riaz Hussain — Chairman & Visionary"
                     className="w-full h-full object-cover object-top aspect-[3/4]"
                     onError={(e) => {
-                      e.currentTarget.src = 'riaz.png';
+                      e.currentTarget.src = '/riaz.png';
                     }}
                   />
                 </div>
                 <div className="px-6 py-4 text-center">
                   <h3 className="font-serif text-xl md:text-2xl font-bold text-white mb-1">Riaz Hussain</h3>
-                  <p className="font-sans text-xs md:text-sm tracking-[0.18em] uppercase text-teal-500 font-semibold mb-2">Chairman & Visionary</p>
+                  <p className="font-sans text-xs md:text-sm tracking-[0.18em] uppercase text-teal-500 font-semibold mb-2">CEO</p>
                   <p className="font-sans text-slate-400 text-xs md:text-sm leading-relaxed max-w-xs mx-auto">
                     Architect of Winmark’s bold restructure and driving force behind Pakistan’s most resilient food ingredient network.
                   </p>
@@ -81,7 +81,7 @@ export function History() {
             </div>
 
             {/* Right Column - Content */}
-            <div className="flex-1 flex flex-col justify-center items-start md:pl-2">
+            <div className="flex-1 flex flex-col justify-center items-start md:items-start items-center text-center md:text-left md:pl-2">
               {/* Eyebrow */}
               <div className="mb-2 mt-1">
                 <span className="inline-block text-xs font-bold tracking-[0.2em] uppercase text-sky-400 align-top">
@@ -89,7 +89,7 @@ export function History() {
                 </span>
               </div>
               {/* Main Heading */}
-              <h3 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
                 A Legacy of Expansion
               </h3>
               {/* Body Text */}
@@ -100,9 +100,9 @@ export function History() {
               <div className="mt-0">
                 <MotionLink
                   to="/history"
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-widest text-white relative overflow-hidden group"
+                  className="inline-flex items-center gap-3 px-6 md:px-8 py-3.5 md:py-4 rounded-full text-sm font-bold uppercase tracking-widest text-white relative overflow-hidden group w-full sm:w-auto justify-center"
                   style={{
-                    background: 'linear-gradient(135deg, #1e535e 0%, #0f766e 100%)',
+                    background: 'linear-gradient(135deg, var(--winmark) 0%, var(--winmark-dark) 100%)',
                     boxShadow: '0 0 0 1px rgba(20,184,166,0.3)',
                   }}
                 >

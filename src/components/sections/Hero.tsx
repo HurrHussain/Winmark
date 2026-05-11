@@ -16,11 +16,11 @@ export function Hero() {
   const scrollIndicatorOpacity = useTransform(scrollY, [0, 120], [1, 0])
 
   return (
-    <section ref={containerRef} className="relative h-screen min-h-[600px] overflow-hidden">
+    <section ref={containerRef} className="relative h-screen min-h-[500px] md:min-h-[600px] overflow-hidden">
       {/* Layer 1: Warehouse background image */}
       <div className="absolute inset-0 w-full h-full">
         <img
-          src="./hero-warehouse.webp"
+          src="/hero-warehouse.webp"
           alt="Winmark Ingredients Facility"
           className="w-full h-full object-cover scale-[1.05]"
         />
@@ -36,7 +36,7 @@ export function Hero() {
         style={{ opacity: cardOpacity }}
       >
         <motion.div
-          className="relative max-w-4xl w-full text-center px-10 py-6 rounded-[3rem] mx-6 overflow-hidden"
+          className="relative max-w-4xl w-full text-center px-5 sm:px-8 md:px-10 py-4 md:py-6 rounded-2xl md:rounded-[3rem] mx-4 sm:mx-6 overflow-hidden"
           style={{
             background: "rgba(255,255,255,0.10)",
             backdropFilter: "blur(20px)",
@@ -56,8 +56,15 @@ export function Hero() {
             }}
           />
 
-          {/* Safety gap: space for the Flying Logo at 2.5 scale hovering above the card */}
-          <div className="h-40 w-full" />
+          {/* Desktop: Safety gap for FlyingLogo. Mobile: Static logo since FlyingLogo is hidden */}
+          <div className="hidden md:block h-40 w-full" />
+          <div className="md:hidden flex justify-center w-full mb-8 pt-4">
+            <img 
+              src={`${import.meta.env.BASE_URL}logo-full.png`} 
+              alt="Winmark Ingredients"
+              className="h-16 sm:h-20 w-auto object-contain drop-shadow-sm" 
+            />
+          </div>
 
           {/* Accent line */}
           <div className="flex items-center justify-center gap-4 mb-8">
@@ -68,11 +75,11 @@ export function Hero() {
             <span className="h-[1px] w-10 bg-[#1e535e]/30" />
           </div>
 
-          <h1 className="text-2xl md:text-3xl font-bold text-[#0f172a] mb-6 tracking-tight leading-[1.1]">
-            Premier Sourcing & Distribution<br />for the Food Industry.
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0f172a] mb-4 md:mb-6 tracking-tight leading-[1.1]">
+            Sourcing & Distribution for the Food Industry
           </h1>
 
-          <p className="text-slate-800 font-medium text-base mb-12 max-w-lg mx-auto leading-relaxed">
+          <p className="text-slate-800 font-medium text-sm md:text-base mb-8 md:mb-12 max-w-lg mx-auto leading-relaxed">
             Trusted by industrial leaders including{" "}
             <span className="text-[#1e535e] font-bold underline decoration-teal-500/30 underline-offset-4">Unilever</span>{" "}
             and{" "}
@@ -83,9 +90,8 @@ export function Hero() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
             <Link
               to="/services"
-              className="inline-flex items-center justify-center px-12 py-4 rounded-full text-white text-sm font-bold tracking-wide transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center px-8 md:px-12 py-3.5 md:py-4 rounded-full text-white text-sm font-bold tracking-wide transition-all hover:-translate-y-0.5 bg-winmark w-full sm:w-auto"
               style={{
-                backgroundColor: "#1e535e",
                 boxShadow: "0 10px 20px -5px rgba(30,83,94,0.4)",
               }}
             >
@@ -93,7 +99,7 @@ export function Hero() {
             </Link>
             <Link
               to="/products"
-              className="inline-flex items-center justify-center px-12 py-4 rounded-full text-slate-800 text-sm font-bold tracking-wide border border-slate-200 bg-white/40 hover:bg-white transition-all"
+              className="inline-flex items-center justify-center px-8 md:px-12 py-3.5 md:py-4 rounded-full text-slate-800 text-sm font-bold tracking-wide border border-slate-200 bg-white/40 hover:bg-white transition-all w-full sm:w-auto"
             >
               Products
             </Link>

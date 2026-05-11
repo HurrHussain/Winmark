@@ -38,9 +38,16 @@ export const ProductCard = ({ product, index }: ProductCardProps) => {
         <h3 className="text-base font-bold text-white leading-tight mb-2 pr-2">
           {product.name}
         </h3>
-        <p className="text-slate-500 text-[10px] mt-auto pt-4 font-bold uppercase tracking-widest">
-          Item #{(index + 1).toString().padStart(4, '0')}-WMI
-        </p>
+        <div className="mt-auto pt-4 flex items-center justify-between">
+          <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">
+            Item #{(index + 1).toString().padStart(4, '0')}-WMI
+          </p>
+          {/* Mobile-only visual hint indicating that the card is tappable */}
+          <div className="md:hidden flex items-center gap-1 text-[9px] font-black uppercase tracking-wider text-teal-400 bg-teal-400/10 px-2 py-1 rounded border border-teal-500/20">
+            {isAdded ? <Check size={10} /> : <Plus size={10} />}
+            <span>{isAdded ? "Added" : "Tap to Add"}</span>
+          </div>
+        </div>
       </div>
 
       {/* Hover/Focus Reveal — Actions (works on both hover and tap/focus) */}

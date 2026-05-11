@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 import { motion, useSpring, useTransform } from "framer-motion"
+import { cn } from "@/lib/utils"
 import { HistorySection, type HistoryChapter } from "@/components/sections/HistorySection"
 
 /* ─── Data ──────────────────────────────────────────────────────────────── */
@@ -54,6 +55,17 @@ export function HistoryPage() {
   // Total slides: Hero (1) + Chapters (4) + Footer (1) = 6
   const totalSlides = CHAPTERS.length + 2
 
+  // Track mobile
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  )
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   // Heavy spring for the parallax lag effects
   const springIndex = useSpring(currentIndex, {
     stiffness: 40,
@@ -66,6 +78,8 @@ export function HistoryPage() {
 
   // Wheel event listener for "Stage Transition"
   useEffect(() => {
+    if (isMobile) return;
+
     const handleWheel = (e: WheelEvent) => {
       // KILL SWITCH: If we are on the final slide, let the user scroll down natively to the Footer.
       // If they scroll up, let native scroll work until they hit the top of the window, then intercept again.
@@ -98,13 +112,15 @@ export function HistoryPage() {
     // Passive false to allow preventDefault
     window.addEventListener("wheel", handleWheel, { passive: false })
     return () => window.removeEventListener("wheel", handleWheel)
-  }, [currentIndex, totalSlides])
+  }, [currentIndex, totalSlides, isMobile])
 
   // Touch event handler for mobile swipe navigation
   const touchStartY = useRef(0)
   const touchStartTime = useRef(0)
 
   useEffect(() => {
+    if (isMobile) return;
+
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY.current = e.touches[0].clientY
       touchStartTime.current = Date.now()
@@ -139,14 +155,17 @@ export function HistoryPage() {
       window.removeEventListener("touchstart", handleTouchStart)
       window.removeEventListener("touchend", handleTouchEnd)
     }
-  }, [currentIndex, totalSlides])
+  }, [currentIndex, totalSlides, isMobile])
 
   return (
-    <div className="bg-[var(--midnight-slate)] text-white antialiased h-[100dvh] w-full overflow-hidden relative selection:bg-teal-500/30">
+    <div className={cn(
+      "bg-[var(--midnight-slate)] text-white antialiased w-full relative selection:bg-teal-500/30",
+      isMobile ? "min-h-screen overflow-y-auto overflow-x-hidden" : "h-[100dvh] overflow-hidden"
+    )}>
 
       {/* Master Stage Wrapper */}
       <motion.div
-        animate={{ y: `-${currentIndex * 100}vh` }}
+        animate={isMobile ? { y: 0 } : { y: `-${currentIndex * 100}vh` }}
         transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
         className="w-full flex flex-col"
       >

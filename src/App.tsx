@@ -66,7 +66,7 @@ function FlyingLogo() {
 
   // Scroll-driven flight values (desktop only)
   const logoY = useTransform(scrollY, [0, 550], [240, 6])
-  const logoScale = useTransform(scrollY, [0, 450], [2.8, 0.85])
+  const logoScale = useTransform(scrollY, [0, 450], [1.8, 0.75])
 
   // ── MOBILE: don't render the FlyingLogo at all ──
   if (isMobile) return null
@@ -76,12 +76,12 @@ function FlyingLogo() {
     return (
       <motion.div
         key="subpage-logo"
-        initial={{ y: 6, scale: 0.85 }}
+        initial={{ y: 6, scale: 0.75 }}
         animate={{ y: isHidden ? -120 : 6 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-0 left-0 w-full z-50 flex justify-center"
         style={{
-          scale: 0.85,
+          scale: 0.75,
           transformOrigin: "top center",
           pointerEvents: "none",
         }}

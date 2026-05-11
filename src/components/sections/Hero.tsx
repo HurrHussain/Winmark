@@ -62,7 +62,7 @@ export function Hero() {
             <img 
               src={`${import.meta.env.BASE_URL}logo-full.png`} 
               alt="Winmark Ingredients"
-              className="h-24 sm:h-32 w-auto object-contain drop-shadow-sm" 
+              className="h-32 sm:h-40 w-auto object-contain drop-shadow-sm" 
             />
           </div>
 
